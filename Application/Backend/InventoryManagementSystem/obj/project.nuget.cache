@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "bR9Ih5xvYGcCCgjuzsoYtUL47BF916dD87Up0rOWcxlNeFcySK7eyCHNH3kGdtBQW3z+6KNfOT8iUI062ygxRQ==",
+  "dgSpecHash": "6ms3EOXvK8IVp3894c1k6FMHaVu2NeVUwVSI6AmTouD22xZ//+CfUQNbh3LBohb5ymL8Zp9uXDHiLtAK/453IA==",
   "success": true,
-  "projectFilePath": "C:\\src\\portfolios\\InventoryManagementSystem\\InventoryManagementSystem\\InventoryManagementSystem.csproj",
+  "projectFilePath": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem\\InventoryManagementSystem.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mrahm\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "C:\\Users\\mrahm\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",

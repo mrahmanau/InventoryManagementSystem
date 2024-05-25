@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryManagementSystem", "InventoryManagementSystem\InventoryManagementSystem.csproj", "{4870856F-C9E9-402F-AB05-94ED088CA02B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InventoryManagementSystem", "InventoryManagementSystem\InventoryManagementSystem.csproj", "{4870856F-C9E9-402F-AB05-94ED088CA02B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{4811B442-A0A6-460F-BE88-20512F7136E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryManagementSystem.Types", "InventoryManagementSystem.Types\InventoryManagementSystem.Types.csproj", "{74FF0EEC-C262-4DAD-81ED-5E4F04B74B7F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryManagementSystem.Model", "InventoryManagementSystem.Model\InventoryManagementSystem.Model.csproj", "{CCAA75C2-6137-4575-A789-AF70D5F89E81}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{4870856F-C9E9-402F-AB05-94ED088CA02B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4870856F-C9E9-402F-AB05-94ED088CA02B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4870856F-C9E9-402F-AB05-94ED088CA02B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4811B442-A0A6-460F-BE88-20512F7136E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4811B442-A0A6-460F-BE88-20512F7136E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4811B442-A0A6-460F-BE88-20512F7136E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4811B442-A0A6-460F-BE88-20512F7136E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74FF0EEC-C262-4DAD-81ED-5E4F04B74B7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74FF0EEC-C262-4DAD-81ED-5E4F04B74B7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74FF0EEC-C262-4DAD-81ED-5E4F04B74B7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74FF0EEC-C262-4DAD-81ED-5E4F04B74B7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCAA75C2-6137-4575-A789-AF70D5F89E81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCAA75C2-6137-4575-A789-AF70D5F89E81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCAA75C2-6137-4575-A789-AF70D5F89E81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCAA75C2-6137-4575-A789-AF70D5F89E81}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
