@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\src\\portfolios\\InventoryManagementSystem\\InventoryManagementSystem\\InventoryManagementSystem.csproj": {}
+    "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem\\InventoryManagementSystem.csproj": {}
   },
   "projects": {
-    "C:\\src\\portfolios\\InventoryManagementSystem\\InventoryManagementSystem\\InventoryManagementSystem.csproj": {
+    "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem\\InventoryManagementSystem.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\src\\portfolios\\InventoryManagementSystem\\InventoryManagementSystem\\InventoryManagementSystem.csproj",
+        "projectUniqueName": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem\\InventoryManagementSystem.csproj",
         "projectName": "InventoryManagementSystem",
-        "projectPath": "C:\\src\\portfolios\\InventoryManagementSystem\\InventoryManagementSystem\\InventoryManagementSystem.csproj",
+        "projectPath": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem\\InventoryManagementSystem.csproj",
         "packagesPath": "C:\\Users\\mrahm\\.nuget\\packages\\",
-        "outputPath": "C:\\src\\portfolios\\InventoryManagementSystem\\InventoryManagementSystem\\obj\\",
+        "outputPath": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\mrahm\\AppData\\Roaming\\NuGet\\NuGet.Config",
