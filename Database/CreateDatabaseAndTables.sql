@@ -55,7 +55,53 @@ CREATE TABLE Users (
 -- Insert into Roles table
 INSERT INTO Roles (RoleName) VALUES ('Admin'), ('User');
 
+GO
 
 
 
+/*
 
+	Database Type: Stored Procedure
+
+*/
+
+
+
+-- Get user by username
+CREATE OR ALTER PROCEDURE spGetUserByUsername
+    @Username NVARCHAR(50)
+AS
+BEGIN
+    SELECT u.UserId, u.FirstName, u.LastName, u.Username, u.Email, u.HashedPassword, u.RoleId, r.RoleName
+    FROM Users u
+    INNER JOIN Roles r ON u.RoleId = r.RoleId
+    WHERE u.Username = @Username;
+END;
+GO
+
+-- Create User
+CREATE OR ALTER PROCEDURE spAddUser
+    @FirstName NVARCHAR(50),
+    @LastName NVARCHAR(50),
+    @Username NVARCHAR(50),
+    @Email NVARCHAR(100),
+    @HashedPassword NVARCHAR(200),
+    @RoleId INT
+AS
+BEGIN
+    INSERT INTO Users (FirstName, LastName, Username, Email, HashedPassword, RoleId)
+    VALUES (@FirstName, @LastName, @Username, @Email, @HashedPassword, @RoleId);
+END;
+GO
+
+-- Get user by id
+CREATE PROCEDURE spGetUserById
+    @UserId INT
+AS
+BEGIN
+    SELECT u.UserId, u.FirstName, u.LastName, u.Username, u.Email, u.HashedPassword, u.RoleId, r.RoleName
+    FROM Users u
+    INNER JOIN Roles r ON u.RoleId = r.RoleId
+    WHERE u.UserId = @UserId;
+END;
+GO
