@@ -1,0 +1,16 @@
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\DAL\bin\Debug\net8.0\DAL.deps.json
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\DAL\bin\Debug\net8.0\DAL.dll
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\DAL\bin\Debug\net8.0\DAL.pdb
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\DAL\bin\Debug\net8.0\InventoryManagementSystem.Types.dll
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\DAL\bin\Debug\net8.0\InventoryManagementSystem.Types.pdb
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\DAL\obj\Debug\net8.0\DAL.csproj.AssemblyReference.cache
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\DAL\obj\Debug\net8.0\DAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\DAL\obj\Debug\net8.0\DAL.AssemblyInfoInputs.cache
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\DAL\obj\Debug\net8.0\DAL.AssemblyInfo.cs
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\DAL\obj\Debug\net8.0\DAL.csproj.CoreCompileInputs.cache
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\DAL\obj\Debug\net8.0\DAL.sourcelink.json
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\DAL\obj\Debug\net8.0\DAL.csproj.CopyComplete
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\DAL\obj\Debug\net8.0\DAL.dll
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\DAL\obj\Debug\net8.0\refint\DAL.dll
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\DAL\obj\Debug\net8.0\DAL.pdb
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\DAL\obj\Debug\net8.0\ref\DAL.dll

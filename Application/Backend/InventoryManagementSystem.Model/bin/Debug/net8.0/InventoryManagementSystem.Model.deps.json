@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "InventoryManagementSystem.Model/1.0.0": {
+        "dependencies": {
+          "InventoryManagementSystem.Types": "1.0.0"
+        },
+        "runtime": {
+          "InventoryManagementSystem.Model.dll": {}
+        }
+      },
+      "InventoryManagementSystem.Types/1.0.0": {
+        "runtime": {
+          "InventoryManagementSystem.Types.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "InventoryManagementSystem.Model/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "InventoryManagementSystem.Types/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
