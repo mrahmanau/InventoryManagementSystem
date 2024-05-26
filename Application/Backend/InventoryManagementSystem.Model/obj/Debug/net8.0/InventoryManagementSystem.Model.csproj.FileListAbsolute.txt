@@ -1,0 +1,16 @@
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Model\bin\Debug\net8.0\InventoryManagementSystem.Model.deps.json
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Model\bin\Debug\net8.0\InventoryManagementSystem.Model.dll
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Model\bin\Debug\net8.0\InventoryManagementSystem.Model.pdb
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Model\bin\Debug\net8.0\InventoryManagementSystem.Types.dll
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Model\bin\Debug\net8.0\InventoryManagementSystem.Types.pdb
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Model\obj\Debug\net8.0\InventoryManagementSystem.Model.csproj.AssemblyReference.cache
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Model\obj\Debug\net8.0\InventoryManagementSystem.Model.GeneratedMSBuildEditorConfig.editorconfig
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Model\obj\Debug\net8.0\InventoryManagementSystem.Model.AssemblyInfoInputs.cache
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Model\obj\Debug\net8.0\InventoryManagementSystem.Model.AssemblyInfo.cs
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Model\obj\Debug\net8.0\InventoryManagementSystem.Model.csproj.CoreCompileInputs.cache
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Model\obj\Debug\net8.0\InventoryManagementSystem.Model.sourcelink.json
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Model\obj\Debug\net8.0\InventoryManagementSystem.Model.csproj.CopyComplete
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Model\obj\Debug\net8.0\InventoryManagementSystem.Model.dll
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Model\obj\Debug\net8.0\refint\InventoryManagementSystem.Model.dll
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Model\obj\Debug\net8.0\InventoryManagementSystem.Model.pdb
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Model\obj\Debug\net8.0\ref\InventoryManagementSystem.Model.dll

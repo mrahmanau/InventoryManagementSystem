@@ -1,0 +1,12 @@
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Types\bin\Debug\net8.0\InventoryManagementSystem.Types.deps.json
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Types\bin\Debug\net8.0\InventoryManagementSystem.Types.dll
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Types\bin\Debug\net8.0\InventoryManagementSystem.Types.pdb
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Types\obj\Debug\net8.0\InventoryManagementSystem.Types.GeneratedMSBuildEditorConfig.editorconfig
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Types\obj\Debug\net8.0\InventoryManagementSystem.Types.AssemblyInfoInputs.cache
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Types\obj\Debug\net8.0\InventoryManagementSystem.Types.AssemblyInfo.cs
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Types\obj\Debug\net8.0\InventoryManagementSystem.Types.csproj.CoreCompileInputs.cache
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Types\obj\Debug\net8.0\InventoryManagementSystem.Types.sourcelink.json
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Types\obj\Debug\net8.0\InventoryManagementSystem.Types.dll
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Types\obj\Debug\net8.0\refint\InventoryManagementSystem.Types.dll
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Types\obj\Debug\net8.0\InventoryManagementSystem.Types.pdb
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Types\obj\Debug\net8.0\ref\InventoryManagementSystem.Types.dll

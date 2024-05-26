@@ -1,0 +1,321 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem.Service\\InventoryManagementSystem.Service.csproj": {}
+  },
+  "projects": {
+    "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\DAL\\DAL.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\DAL\\DAL.csproj",
+        "projectName": "DAL",
+        "projectPath": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\DAL\\DAL.csproj",
+        "packagesPath": "C:\\Users\\mrahm\\.nuget\\packages\\",
+        "outputPath": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\DAL\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\mrahm\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem.Types\\InventoryManagementSystem.Types.csproj": {
+                "projectPath": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem.Types\\InventoryManagementSystem.Types.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.Data.SqlClient": {
+              "target": "Package",
+              "version": "[5.2.0, )"
+            },
+            "Microsoft.Extensions.Configuration.Json": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.205/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem.Model\\InventoryManagementSystem.Model.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem.Model\\InventoryManagementSystem.Model.csproj",
+        "projectName": "InventoryManagementSystem.Model",
+        "projectPath": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem.Model\\InventoryManagementSystem.Model.csproj",
+        "packagesPath": "C:\\Users\\mrahm\\.nuget\\packages\\",
+        "outputPath": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem.Model\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\mrahm\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem.Types\\InventoryManagementSystem.Types.csproj": {
+                "projectPath": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem.Types\\InventoryManagementSystem.Types.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.205/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem.Repository\\InventoryManagementSystem.Repository.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem.Repository\\InventoryManagementSystem.Repository.csproj",
+        "projectName": "InventoryManagementSystem.Repository",
+        "projectPath": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem.Repository\\InventoryManagementSystem.Repository.csproj",
+        "packagesPath": "C:\\Users\\mrahm\\.nuget\\packages\\",
+        "outputPath": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem.Repository\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\mrahm\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\DAL\\DAL.csproj": {
+                "projectPath": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\DAL\\DAL.csproj"
+              },
+              "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem.Model\\InventoryManagementSystem.Model.csproj": {
+                "projectPath": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem.Model\\InventoryManagementSystem.Model.csproj"
+              },
+              "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem.Types\\InventoryManagementSystem.Types.csproj": {
+                "projectPath": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem.Types\\InventoryManagementSystem.Types.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.205/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem.Service\\InventoryManagementSystem.Service.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem.Service\\InventoryManagementSystem.Service.csproj",
+        "projectName": "InventoryManagementSystem.Service",
+        "projectPath": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem.Service\\InventoryManagementSystem.Service.csproj",
+        "packagesPath": "C:\\Users\\mrahm\\.nuget\\packages\\",
+        "outputPath": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem.Service\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\mrahm\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem.Model\\InventoryManagementSystem.Model.csproj": {
+                "projectPath": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem.Model\\InventoryManagementSystem.Model.csproj"
+              },
+              "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem.Repository\\InventoryManagementSystem.Repository.csproj": {
+                "projectPath": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem.Repository\\InventoryManagementSystem.Repository.csproj"
+              },
+              "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem.Types\\InventoryManagementSystem.Types.csproj": {
+                "projectPath": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem.Types\\InventoryManagementSystem.Types.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.205/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem.Types\\InventoryManagementSystem.Types.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem.Types\\InventoryManagementSystem.Types.csproj",
+        "projectName": "InventoryManagementSystem.Types",
+        "projectPath": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem.Types\\InventoryManagementSystem.Types.csproj",
+        "packagesPath": "C:\\Users\\mrahm\\.nuget\\packages\\",
+        "outputPath": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem.Types\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\mrahm\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.205/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

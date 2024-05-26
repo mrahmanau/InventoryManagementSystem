@@ -1,4 +1,6 @@
 
+using InventoryManagementSystem.Service;
+
 namespace InventoryManagementSystem
 {
     public class Program
@@ -10,6 +12,8 @@ namespace InventoryManagementSystem
             // Add services to the container.
 
             builder.Services.AddControllers();
+
+            builder.Services.AddScoped<IAuthService, AuthService>();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -22,6 +26,9 @@ namespace InventoryManagementSystem
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.UseStaticFiles();
+            app.UseDefaultFiles();
 
             app.UseHttpsRedirection();
 
