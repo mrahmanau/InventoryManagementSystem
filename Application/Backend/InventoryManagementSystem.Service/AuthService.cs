@@ -1,11 +1,14 @@
 ﻿using InventoryManagementSystem.Model;
 using InventoryManagementSystem.Repository;
+using InventoryManagementSystem.Types;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace InventoryManagementSystem.Service
 {
@@ -18,12 +21,23 @@ namespace InventoryManagementSystem.Service
         {
             try
             {
+                // Validate the user registration DTO
+                var validationErrors = ValidateUserRegistration(userRegistrationDTO);
+
+                if (validationErrors.Any())
+                {
+                    // If there are validation errors, return the errors as a string
+                    //return string.Join(", ", validationErrors.Select(error => error.Description));
+                   throw new ValidationException(string.Join(", ", validationErrors.Select(error => error.Description)));
+                }
+
                 // Check if user already exists
                 var existingUser = await repo.GetUserByUsernameAsync(userRegistrationDTO.Username);
                 if (existingUser != null)
                 {
                     throw new UserAlreadyExistsException("User already exists.");
                 }
+
 
                 // Create new user
 
@@ -46,6 +60,10 @@ namespace InventoryManagementSystem.Service
             {
                 throw ex;
             }
+            catch(ValidationException ex)
+            {
+                throw ex;
+            }
             catch(Exception ex)
             {
                 throw new ApplicationException("An error occurred while registering the user to the database.", ex);
@@ -54,8 +72,11 @@ namespace InventoryManagementSystem.Service
 
         public class UserAlreadyExistsException : Exception
         {
-            public UserAlreadyExistsException(string message) : base(message) { }
+            public UserAlreadyExistsException(string message) : base(message)
+            {
+            }
         }
+
         #endregion
 
         #region Private Methods
@@ -74,6 +95,34 @@ namespace InventoryManagementSystem.Service
                 return builder.ToString();
             }
         }
+
+        private List<ValidationError> ValidateUserRegistration(UserRegistrationDTO userRegistrationDTO)
+        {
+            var errors = new List<ValidationError>();
+
+            // Validate first name
+            if(string.IsNullOrWhiteSpace(userRegistrationDTO.FirstName))
+            {
+                errors.Add(new ValidationError("First name is required.", ErrorType.Model));
+            }
+            else if(userRegistrationDTO.FirstName.Length < 2)
+            {
+                errors.Add(new ValidationError("First name cannot be less than 2 characters.", ErrorType.Model));
+            }
+
+            // Validate last name
+            if(string.IsNullOrEmpty(userRegistrationDTO.LastName))
+            {
+                errors.Add(new ValidationError("Last name is required.", ErrorType.Model));
+            }
+            else if(userRegistrationDTO.LastName.Length < 3)
+            {
+                errors.Add(new ValidationError("Last name cannot be less than 3 characters.", ErrorType.Model));
+            }
+
+            return errors;
+        }
+
         #endregion
     }
 }
