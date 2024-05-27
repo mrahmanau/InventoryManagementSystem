@@ -2,6 +2,7 @@
 using InventoryManagementSystem.Model;
 using InventoryManagementSystem.Types;
 using System.Data;
+using static Azure.Core.HttpHeader;
 
 namespace InventoryManagementSystem.Repository
 {
@@ -19,6 +20,13 @@ namespace InventoryManagementSystem.Repository
             };
 
             var dt = await db.ExecuteAsync("spGetUserByUsername", parms);
+
+           // Log the column names for debugging
+    Console.WriteLine("Columns in the returned DataTable:");
+    foreach (DataColumn column in dt.Columns)
+                {
+                    Console.WriteLine(column.ColumnName);
+                }
 
             if (dt.Rows.Count == 0)
                 return null;
