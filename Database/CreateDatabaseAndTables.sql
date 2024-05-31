@@ -94,8 +94,21 @@ BEGIN
 END;
 GO
 
+-- User Login
+CREATE OR ALTER PROCEDURE spGetUserByUsernameAndPassword
+	@Username NVARCHAR(50),
+	@HashedPassword NVARCHAR(200)
+AS
+BEGIN
+	SELECT u.*, r.RoleName
+	FROM Users u
+	INNER JOIN Roles r on u.RoleId = r.RoleId
+	WHERE u.Username = @Username AND u.HashedPassword = @HashedPassword;
+END;
+GO
+
 -- Get user by id
-CREATE PROCEDURE spGetUserById
+CREATE OR ALTER PROCEDURE spGetUserById
     @UserId INT
 AS
 BEGIN
