@@ -70,6 +70,19 @@ namespace InventoryManagementSystem.Service
             }
         }
 
+        public async Task<User> LoginAsync(LoginDTO loginDTO)
+        {
+            var hashedPassword = HashPassword(loginDTO.Password);
+
+            var user = await repo.GetUserByUsernameAndPasswordAsync(loginDTO.Username, hashedPassword);
+            if (user == null)
+            {
+                throw new Exception("Invalid username or password.");
+            }
+
+            return user;
+        }
+
         public class UserAlreadyExistsException : Exception
         {
             public UserAlreadyExistsException(string message) : base(message)
@@ -118,6 +131,16 @@ namespace InventoryManagementSystem.Service
             else if(userRegistrationDTO.LastName.Length < 3)
             {
                 errors.Add(new ValidationError("Last name cannot be less than 3 characters.", ErrorType.Model));
+            }
+
+            // Validate username
+            if(string.IsNullOrEmpty(userRegistrationDTO.Username))
+            {
+                errors.Add(new ValidationError("User name is required", ErrorType.Model));
+            }
+            else if(userRegistrationDTO.Username.Length < 4)
+            {
+                errors.Add(new ValidationError("Username cannot be less than 4 characters", ErrorType.Model));
             }
 
             return errors;

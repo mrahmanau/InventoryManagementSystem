@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace InventoryManagementSystem.Model
 {
-    public class UserLoginDTO
+    public class LoginOutputDTO
     {
-        public string UserName;
-        public string Password;
+        public int? UserId { get; set; }
+        public string? Token { get; set; }
+        public int ExpiresIn { get; set; }
     }
 }

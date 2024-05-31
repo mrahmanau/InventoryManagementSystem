@@ -12,5 +12,6 @@ namespace InventoryManagementSystem.Repository
         Task<User> GetUserByUsernameAsync(string username);
         Task AddUserAsync(User user);
         Task<User> GetUserByIdAsync(int userId);
+        Task<User> GetUserByUsernameAndPasswordAsync(string username, string hashedPassword);
     }
 }

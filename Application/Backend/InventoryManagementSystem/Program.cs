@@ -1,5 +1,7 @@
 
+using InventoryManagementSystem.Interfaces;
 using InventoryManagementSystem.Service;
+using InventoryManagementSystem.Services;
 
 namespace InventoryManagementSystem
 {
@@ -14,6 +16,7 @@ namespace InventoryManagementSystem
             builder.Services.AddControllers();
 
             builder.Services.AddScoped<IAuthService, AuthService>();
+            builder.Services.AddScoped<ITokenService, TokenService>();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -29,6 +32,14 @@ namespace InventoryManagementSystem
 
             app.UseStaticFiles();
             app.UseDefaultFiles();
+
+            // Configure CORS in ASP.NET Core
+            app.UseCors(policy =>
+                policy
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .WithOrigins("*")
+                );
 
             app.UseHttpsRedirection();
 

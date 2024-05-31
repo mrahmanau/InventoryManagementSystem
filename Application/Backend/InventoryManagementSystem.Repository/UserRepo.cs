@@ -21,9 +21,9 @@ namespace InventoryManagementSystem.Repository
 
             var dt = await db.ExecuteAsync("spGetUserByUsername", parms);
 
-           // Log the column names for debugging
-    Console.WriteLine("Columns in the returned DataTable:");
-    foreach (DataColumn column in dt.Columns)
+               // Log the column names for debugging
+        Console.WriteLine("Columns in the returned DataTable:");
+        foreach (DataColumn column in dt.Columns)
                 {
                     Console.WriteLine(column.ColumnName);
                 }
@@ -61,6 +61,37 @@ namespace InventoryManagementSystem.Repository
             };
 
             await db.ExecuteNonQueryAsync("spAddUser", parms);
+        }
+
+        public async Task<User> GetUserByUsernameAndPasswordAsync(string username, string hashedPassword)
+        {
+            var parms = new List<Parm>
+            {
+                new Parm("@Username", SqlDbType.NVarChar, username, 50),
+                new Parm("@HashedPassword", SqlDbType.NVarChar, hashedPassword, 200)
+            };
+
+            var dt = await db.ExecuteAsync("spGetUserByUsernameAndPassword", parms);
+
+            if (dt.Rows.Count == 0)
+                return null;
+
+            var row = dt.Rows[0];
+            return new User
+            {
+                UserId = (int)row["UserId"],
+                FirstName = row["FirstName"].ToString(),
+                LastName = row["LastName"].ToString(),
+                Username = row["Username"].ToString(),
+                Email = row["Email"].ToString(),
+                HashedPassword = row["HashedPassword"].ToString(),
+                RoleId = (int)row["RoleId"],
+                Role = new Role
+                {
+                    RoleId = (int)row["RoleId"],
+                    RoleName = row["RoleName"].ToString()
+                }
+            };
         }
 
         public async Task<User> GetUserByIdAsync(int userId)
