@@ -1,4 +1,5 @@
-﻿using InventoryManagementSystem.Model;
+﻿using InventoryManagementSystem.Interfaces;
+using InventoryManagementSystem.Model;
 using InventoryManagementSystem.Service;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
@@ -11,10 +12,12 @@ namespace InventoryManagementSystem.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
+        private readonly ITokenService _tokenService;
 
-        public AuthController(IAuthService authService)
+        public AuthController(IAuthService authService, ITokenService tokenService)
         {
             _authService = authService;
+            _tokenService = tokenService;
         }
 
         [HttpPost("register")]
@@ -32,6 +35,27 @@ namespace InventoryManagementSystem.Controllers
             catch (Exception ex)
             {
                 return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpPost("login")]
+        public async Task<ActionResult<LoginOutputDTO>> LoginAsync([FromBody] LoginDTO loginDTO)
+        {
+            try
+            {
+                var user = await _authService.LoginAsync(loginDTO);
+                var token = _tokenService.GenerateJwtToken(user);
+
+                return new LoginOutputDTO
+                {
+                    UserId = user.UserId,
+                    Token = token,
+                    ExpiresIn = 7 * 24 * 60 * 60 // Token expiration time in seconds (7 days)
+                };
+            }
+            catch(Exception ex)
+            {
+                return Unauthorized(new {message = ex.Message});
             }
         }
     }

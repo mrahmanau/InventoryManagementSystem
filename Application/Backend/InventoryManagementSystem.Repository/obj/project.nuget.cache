@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "o0NX+ZmDmZQFsf2yAYuPkc0vtK1HPqO5TKivZSL4Q2Uu8+akzc+HhqMfW86ITs3/2ja8jvlcLAYYHx5xXz1KzQ==",
+  "dgSpecHash": "qVn0J70Oc2e7n2/j6xLRqmUrhJHtZs0xkJiTdkHDAkjyArVoE/58ndlBJS9kLQjnxJZOrm7GfhdWJSav+fldUA==",
   "success": true,
   "projectFilePath": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem.Repository\\InventoryManagementSystem.Repository.csproj",
   "expectedPackageFiles": [
