@@ -18,6 +18,8 @@ import { HttpClientModule } from '@angular/common/http';
 })
 export class RegisterComponent {
   registerForm: FormGroup;
+  successMessage: string | null = null;
+  errorMessage: string | null = null;
 
   constructor(private fb: FormBuilder, private authService: AuthService) {
     this.registerForm = this.fb.group({
@@ -31,16 +33,22 @@ export class RegisterComponent {
   }
 
   onSubmit() {
+    this.clearMessages();
     if (this.registerForm.valid) {
       this.authService.register(this.registerForm.value).subscribe({
         next: (res) => {
-          alert('User registered successfully');
+          this.successMessage = 'User registered successfully.';
           this.registerForm.reset();
         },
         error: (err) => {
-          alert('Error: ' + err.error.message);
+          this.errorMessage = 'Error: ' + err.error.message;
         },
       });
     }
+  }
+
+  clearMessages(): void {
+    this.successMessage = null;
+    this.errorMessage = null;
   }
 }
