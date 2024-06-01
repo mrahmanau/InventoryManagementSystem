@@ -21,7 +21,7 @@ namespace InventoryManagementSystem.Controllers
             try
             {
                 await productService.AddProductAsync(prodcutDTO);
-                return Ok("(C) Product added successfully");
+                return Ok(new { message = "Product added successfully" });
             }
             catch(Exception ex)
             {
