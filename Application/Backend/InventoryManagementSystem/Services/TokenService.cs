@@ -33,7 +33,11 @@ namespace InventoryManagementSystem.Services
                 new Claim(JwtRegisteredClaimNames.UniqueName, user.UserId != null ? user.UserId.ToString() : ""),
                 new Claim(JwtRegisteredClaimNames.Sub, user.UserId.ToString()),
                 new Claim(ClaimTypes.Name, user.Username),
-                new Claim(ClaimTypes.Role, user.Role.RoleName)
+                new Claim(ClaimTypes.Role, user.Role.RoleName),
+                new Claim("FirstName", user.FirstName),
+                new Claim("LastName", user.LastName),
+                new Claim(ClaimTypes.Email, user.Email),
+
             };
 
             // Create new credentials for signing the token

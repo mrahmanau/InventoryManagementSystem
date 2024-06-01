@@ -10,3 +10,4 @@ C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagem
 C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Types\obj\Debug\net8.0\refint\InventoryManagementSystem.Types.dll
 C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Types\obj\Debug\net8.0\InventoryManagementSystem.Types.pdb
 C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Types\obj\Debug\net8.0\ref\InventoryManagementSystem.Types.dll
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Types\obj\Debug\net8.0\InventoryManagementSystem.Types.csproj.AssemblyReference.cache
