@@ -76,3 +76,4 @@ C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagem
 C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem\bin\Debug\net8.0\DAL.pdb
 C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem\bin\Debug\net8.0\InventoryManagementSystem.Repository.pdb
 C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem\bin\Debug\net8.0\InventoryManagementSystem.Types.pdb
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
