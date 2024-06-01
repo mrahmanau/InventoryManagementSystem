@@ -23,14 +23,18 @@ export class AuthService {
 
   // Store the token in local storage
   storeToken(token: string): void {
-    localStorage.setItem('token', token);
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('token', token);
+    }
   }
 
   // Retrieve the token from local storage
   getToken(): string | null {
-    return localStorage.getItem('token');
+    if (typeof localStorage !== 'undefined') {
+      return localStorage.getItem('token');
+    }
+    return null;
   }
-
   // Check if the user is authenticated
   isAuthenticated(): boolean {
     //return this.getToken() !== null;
@@ -44,8 +48,53 @@ export class AuthService {
     return token ? this.jwtHelper.isTokenExpired(token) : true;
   }
 
+  // Get user role
+  getUserRole(): string | null {
+    const token = this.getToken();
+    if (token) {
+      const decodedToken = this.jwtHelper.decodeToken(token);
+      return decodedToken?.role || null; // Retrieve role from token
+    }
+    return null;
+  }
+
+  // Get user first name
+  getUserFirstName(): string | null {
+    const token = this.getToken();
+    if (token) {
+      const decodedToken = this.jwtHelper.decodeToken(token);
+      console.log('Decoded Token:', decodedToken);
+
+      return decodedToken?.FirstName || null;
+    }
+    return null;
+  }
+
+  // Get user last name
+  getUserLastName(): string | null {
+    const token = this.getToken();
+    if (token) {
+      const decodedToken = this.jwtHelper.decodeToken(token);
+      console.log('Decoded Token:', decodedToken);
+      return decodedToken?.LastName || null;
+    }
+    return null;
+  }
+
+  // Get user email
+  getUserEmail(): string | null {
+    const token = this.getToken();
+    if (token) {
+      const decodedToken = this.jwtHelper.decodeToken(token);
+      return decodedToken?.email || null;
+    }
+    return null;
+  }
+
   // Remove the token from local storage (logout)
   logout(): void {
-    localStorage.removeItem('token');
+    if (typeof localStorage !== 'undefined') {
+      localStorage.removeItem('token');
+    }
   }
 }

@@ -21,4 +21,8 @@ export class NavbarComponent {
   isAuthenticated(): boolean {
     return this.authService.isAuthenticated();
   }
+
+  isAdmin(): boolean {
+    return this.authService.getUserRole() === 'Admin';
+  }
 }
