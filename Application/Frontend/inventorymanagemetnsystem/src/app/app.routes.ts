@@ -6,6 +6,7 @@ import { AuthGuard } from './components/auth/authguard/auth.guard';
 import { HomeComponent } from './components/home/home.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { RoleGuard } from './components/auth/roleguard/role-guard';
+import { AddProductComponent } from './components/add-product/add-product.component';
 
 export const routes: Routes = [
   {
@@ -28,6 +29,12 @@ export const routes: Routes = [
   {
     path: 'admin',
     component: AdminComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { expectedRole: 'Admin' },
+  },
+  {
+    path: 'add-product',
+    component: AddProductComponent,
     canActivate: [AuthGuard, RoleGuard],
     data: { expectedRole: 'Admin' },
   },
