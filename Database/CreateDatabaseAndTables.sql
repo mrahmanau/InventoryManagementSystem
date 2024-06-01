@@ -44,6 +44,28 @@ CREATE TABLE Users (
     FOREIGN KEY (RoleId) REFERENCES Roles(RoleId)
 );
 
+-- Create the Categories table
+IF OBJECT_ID('Categories', 'U') IS NOT NULL
+DROP TABLE Categories;
+
+CREATE TABLE Categories (
+    CategoryID INT PRIMARY KEY IDENTITY(1,1),
+    CategoryName VARCHAR(255) NOT NULL
+);
+
+-- Create the Products table
+IF OBJECT_ID('Products', 'U') IS NOT NULL
+DROP TABLE Products;
+
+CREATE TABLE Products (
+    ProductID INT PRIMARY KEY IDENTITY(1,1),
+    ProductName VARCHAR(255) NOT NULL,
+    CategoryID INT,
+    Quantity INT DEFAULT 0,
+    Price DECIMAL(10, 2),
+	Version ROWVERSION,
+    FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID)
+);
 
 
 /*
@@ -54,6 +76,43 @@ CREATE TABLE Users (
 
 -- Insert into Roles table
 INSERT INTO Roles (RoleName) VALUES ('Admin'), ('User');
+
+-- Insert into Users table
+INSERT INTO Users (FirstName, LastName, Username, Email, HashedPassword, RoleId)
+VALUES 
+    ('Mahfuzur', 'Rahman', 'mahfuz', 'mrahmanlinks@gmail.com', '123@Abc', 1),
+    ('Shah', 'Alom', 'salom', 'shahalom.talha@yahoo.com', '123@Abc', 1),
+    ('Michael', 'Johnson', 'michaelj', 'michael.johnson@example.com', '123@Abc', 2),
+    ('Emily', 'Davis', 'emilyd', 'emily.davis@example.com', '123@Abc', 2),
+    ('David', 'Brown', 'davidb', 'david.brown@example.com', '123@Abc', 2);
+
+-- Insert into Categories table
+INSERT INTO Categories (CategoryName)
+VALUES 
+    ('Electronics'),
+    ('Furniture'),
+    ('Clothing'),
+    ('Books'),
+    ('Sports');
+
+-- Insert into Products table
+INSERT INTO Products (ProductName, CategoryID, Quantity, Price)
+VALUES 
+    ('Laptop', 1, 10, 999.99),
+    ('Smartphone', 1, 25, 699.99),
+    ('Headphones', 1, 50, 199.99),
+    ('Sofa', 2, 5, 499.99),
+    ('Dining Table', 2, 10, 299.99),
+    ('T-shirt', 3, 100, 19.99),
+    ('Jeans', 3, 75, 39.99),
+    ('Jacket', 3, 30, 89.99),
+    ('Novel', 4, 200, 9.99),
+    ('Textbook', 4, 150, 49.99),
+    ('Basketball', 5, 20, 29.99),
+    ('Soccer Ball', 5, 30, 24.99),
+    ('Tennis Racket', 5, 15, 79.99),
+    ('Smartwatch', 1, 40, 199.99),
+    ('Office Chair', 2, 20, 149.99);
 
 GO
 
@@ -117,4 +176,39 @@ BEGIN
     INNER JOIN Roles r ON u.RoleId = r.RoleId
     WHERE u.UserId = @UserId;
 END;
+GO
+
+-- Add a product
+CREATE OR ALTER PROCEDURE spAddProduct
+	@ProductName NVARCHAR(255),
+	@Quantity INT,
+	@Price DECIMAL (10, 2),
+	@CategoryId INT
+
+AS
+BEGIN
+	INSERT INTO Products (ProductName, Quantity, Price, CategoryID)
+	VALUES(@ProductName, @Quantity, @Price, @CategoryId)
+END;
+GO
+
+-- Get product by name
+CREATE OR ALTER PROCEDURE spGetProductByName
+    @ProductName NVARCHAR(255)
+AS
+BEGIN
+    SELECT ProductId, ProductName, Quantity, Price, CategoryId, Version
+    FROM Products
+    WHERE ProductName = @ProductName;
+END;
+GO
+
+-- Get categories
+CREATE OR ALTER PROCEDURE spGetCategories
+AS
+	BEGIN
+		SELECT CategoryID, CategoryName
+		FROM Categories
+		ORDER BY CategoryName ASC;
+	END;
 GO
