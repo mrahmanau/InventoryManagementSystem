@@ -10,5 +10,7 @@ namespace InventoryManagementSystem.Service
     public interface IProductService
     {
         Task AddProductAsync(ProductDTO productDTO);
+        Task<IEnumerable<ProductDTO>> GetAllProductsAsync();
+        Task UpdateProductAsync(ProductUpdateDTO productUpdateDTO);
     }
 }
