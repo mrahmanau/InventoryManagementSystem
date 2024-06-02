@@ -1,0 +1,46 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-12">
+      <h3 class="mb-4">Products List</h3>
+    </div>
+    <div class="col-md-4" *ngFor="let product of products">
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">{{ product.productName }}</h5>
+          <p class="card-text">
+            <strong>Product ID:</strong> {{ product.productId }}
+          </p>
+          <p class="card-text">
+            <strong>Quantity:</strong> {{ product.quantity }}
+          </p>
+          <p class="card-text">
+            <strong>Price:</strong> {{ product.price | currency }}
+          </p>
+          <p class="card-text">
+            <strong>Category:</strong> {{ getCategoryName(product.categoryId) }}
+          </p>
+          <div class="d-flex">
+            <button
+              class="btn btn-primary buttons-margin"
+              (click)="editProduct(product)"
+            >
+              Edit
+            </button>
+            <button
+              class="btn btn-secondary buttons-margin"
+              (click)="viewProductDetails(product)"
+            >
+              Details
+            </button>
+            <button
+              class="btn btn-danger"
+              (click)="deleteProduct(product.productId)"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
