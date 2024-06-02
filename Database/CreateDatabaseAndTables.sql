@@ -80,11 +80,11 @@ INSERT INTO Roles (RoleName) VALUES ('Admin'), ('User');
 -- Insert into Users table
 INSERT INTO Users (FirstName, LastName, Username, Email, HashedPassword, RoleId)
 VALUES 
-    ('Mahfuzur', 'Rahman', 'mahfuz', 'mrahmanlinks@gmail.com', '123@Abc', 1),
-    ('Shah', 'Alom', 'salom', 'shahalom.talha@yahoo.com', '123@Abc', 1),
-    ('Michael', 'Johnson', 'michaelj', 'michael.johnson@example.com', '123@Abc', 2),
-    ('Emily', 'Davis', 'emilyd', 'emily.davis@example.com', '123@Abc', 2),
-    ('David', 'Brown', 'davidb', 'david.brown@example.com', '123@Abc', 2);
+    ('Mahfuzur', 'Rahman', 'mahfuz', 'mrahmanlinks@gmail.com', CONVERT(VARCHAR(64), HASHBYTES('SHA2_256', '123@Abc'), 2), 1),
+    ('Shah', 'Alom', 'salom', 'shahalom.talha@yahoo.com', CONVERT(VARCHAR(64), HASHBYTES('SHA2_256', '123@Abc'), 2), 1),
+    ('Shawon', 'Alom', 'shawon', 'shawon.alom@outlook.com', CONVERT(VARCHAR(64), HASHBYTES('SHA2_256', '123@Abc'), 2), 2),
+    ('Emily', 'Davis', 'emilyd', 'emily.davis@example.com', CONVERT(VARCHAR(64), HASHBYTES('SHA2_256', '123@Abc'), 2), 2),
+    ('David', 'Brown', 'davidb', 'david.brown@example.com', CONVERT(VARCHAR(64), HASHBYTES('SHA2_256', '123@Abc'), 2), 2);
 
 -- Insert into Categories table
 INSERT INTO Categories (CategoryName)
@@ -192,6 +192,41 @@ BEGIN
 END;
 GO
 
+-- Update a product
+CREATE OR ALTER PROCEDURE spUpdateProduct
+    @ProductId INT,
+    @ProductName NVARCHAR(255),
+    @Quantity INT,
+    @Price DECIMAL,
+    @CategoryId INT,
+    @Version ROWVERSION
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Check for concurrency
+    DECLARE @currentVersion ROWVERSION;
+    SELECT @currentVersion = Version FROM Products WHERE ProductId = @ProductId;
+
+    IF @currentVersion != @Version
+    BEGIN
+        -- Raise a custom error if the versions do not match
+        THROW 50000, 'Concurrency error occurred in updating product. Please try again.', 1;
+        RETURN;
+    END
+
+    -- Update the product
+    UPDATE Products
+    SET ProductName = @ProductName,
+        Quantity = @Quantity,
+        Price = @Price,
+        CategoryId = @CategoryId
+    WHERE ProductId = @ProductId AND Version = @Version;
+END;
+GO
+
+
+
 -- Get product by name
 CREATE OR ALTER PROCEDURE spGetProductByName
     @ProductName NVARCHAR(255)
@@ -200,6 +235,15 @@ BEGIN
     SELECT ProductId, ProductName, Quantity, Price, CategoryId, Version
     FROM Products
     WHERE ProductName = @ProductName;
+END;
+GO
+
+-- Get all products
+CREATE OR ALTER PROCEDURE spGetAllProducts
+AS
+BEGIN
+	SELECT ProductID, ProductName, Quantity, Price, CategoryID, Version 
+	FROM Products;
 END;
 GO
 
