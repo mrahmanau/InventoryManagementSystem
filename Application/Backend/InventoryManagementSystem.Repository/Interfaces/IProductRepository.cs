@@ -11,5 +11,7 @@ namespace InventoryManagementSystem.Repository
     {
         Task AddProductAsync(Product product);
         Task<Product> GetProductByNameAsync(string productName);
+        Task<IEnumerable<Product>> GetAllProductsAsync();
+        Task UpdateProductAsync(Product product);
     }
 }
