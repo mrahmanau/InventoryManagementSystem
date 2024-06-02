@@ -18,4 +18,8 @@ export class ProductService {
   getCategories(): Observable<CategoryDTO[]> {
     return this.http.get<CategoryDTO[]>(`${API_URL}/Categories`);
   }
+
+  getAllProducts(): Observable<ProductDTO[]> {
+    return this.http.get<ProductDTO[]>(`${API_URL}/Product`);
+  }
 }

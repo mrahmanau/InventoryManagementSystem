@@ -27,8 +27,15 @@ export class AddProductComponent implements OnInit {
   constructor(private fb: FormBuilder, private productService: ProductService) {
     this.addProductForm = this.fb.group({
       productName: ['', [Validators.required, Validators.minLength(2)]],
-      quantity: [0, [Validators.required, Validators.min(0)]],
-      price: [0, [Validators.required, Validators.min(0)]],
+      quantity: [
+        0,
+        [
+          Validators.required,
+          Validators.min(1),
+          Validators.pattern('^[1-9]*$'),
+        ],
+      ],
+      price: [0, [Validators.required, Validators.min(0.000000001)]],
       categoryId: ['', Validators.required],
     });
   }
@@ -42,6 +49,11 @@ export class AddProductComponent implements OnInit {
         this.errorMessage = 'Error fetching categories: ' + error.message;
       }
     );
+
+    this.addProductForm.valueChanges.subscribe(() => {
+      this.successMessage = null;
+      this.errorMessage = null;
+    });
   }
 
   onSubmit() {

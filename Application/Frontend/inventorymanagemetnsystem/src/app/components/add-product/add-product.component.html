@@ -58,7 +58,12 @@
                   >Quantity is required</small
                 >
                 <small *ngIf="addProductForm.get('quantity')?.errors?.['min']"
-                  >Quantity cannot be negative</small
+                  >Quantity must be greater than zero
+                </small>
+                <small
+                  *ngIf="addProductForm.get('quantity')?.errors?.['pattern']"
+                >
+                  and it must be a whole number</small
                 >
               </div>
             </div>
@@ -82,7 +87,7 @@
                   >Price is required</small
                 >
                 <small *ngIf="addProductForm.get('price')?.errors?.['min']"
-                  >Price cannot be negative</small
+                  >Price cannot be negative and must be greater than zero</small
                 >
               </div>
             </div>
@@ -116,7 +121,7 @@
               </div>
             </div>
 
-            <button type="submit">Add Product</button>
+            <button type="submit" class="btn btn-primary">Add Product</button>
           </form>
         </div>
       </div>
