@@ -192,28 +192,16 @@ BEGIN
 END;
 GO
 
--- Update a product
+-- Update product
 CREATE OR ALTER PROCEDURE spUpdateProduct
     @ProductId INT,
     @ProductName NVARCHAR(255),
     @Quantity INT,
     @Price DECIMAL,
-    @CategoryId INT,
-    @Version ROWVERSION
+    @CategoryId INT
 AS
 BEGIN
     SET NOCOUNT ON;
-
-    -- Check for concurrency
-    DECLARE @currentVersion ROWVERSION;
-    SELECT @currentVersion = Version FROM Products WHERE ProductId = @ProductId;
-
-    IF @currentVersion != @Version
-    BEGIN
-        -- Raise a custom error if the versions do not match
-        THROW 50000, 'Concurrency error occurred in updating product. Please try again.', 1;
-        RETURN;
-    END
 
     -- Update the product
     UPDATE Products
@@ -221,10 +209,40 @@ BEGIN
         Quantity = @Quantity,
         Price = @Price,
         CategoryId = @CategoryId
-    WHERE ProductId = @ProductId AND Version = @Version;
+    WHERE ProductId = @ProductId;
 END;
 GO
 
+-- Delete product
+CREATE OR ALTER PROCEDURE spDeleteProduct
+	@ProductId INT
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	DELETE FROM Products
+	WHERE ProductID = @ProductId;
+END;
+GO
+
+-- Search products
+CREATE OR ALTER PROCEDURE spSearchProducts
+	@ProductName NVARCHAR(255) = NULL,
+	@CategoryId INT = NULL,
+	@MinPrice DECIMAL = NULL,
+	@MaxPrice DECIMAL = NULL
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	SELECT *
+    FROM Products
+    WHERE (@ProductName IS NULL OR ProductName LIKE '%' + @ProductName + '%')
+      AND (@CategoryId IS NULL OR CategoryID = @CategoryId)
+      AND (@MinPrice IS NULL OR Price >= @MinPrice)
+      AND (@MaxPrice IS NULL OR Price <= @MaxPrice);
+END;
+GO
 
 
 -- Get product by name
