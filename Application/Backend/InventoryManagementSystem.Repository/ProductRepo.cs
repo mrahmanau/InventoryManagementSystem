@@ -88,7 +88,7 @@ namespace InventoryManagementSystem.Repository
                     new Parm("@Quantity", SqlDbType.Int, product.Quantity),
                     new Parm("@Price", SqlDbType.Decimal, product.Price),
                     new Parm("@CategoryId", SqlDbType.Int, product.CategoryId),
-                    new Parm("@Version", SqlDbType.Binary, product.Version)
+                    //new Parm("@Version", SqlDbType.Binary, product.Version)
                 };
 
                 await db.ExecuteNonQueryAsync("spUpdateProduct", parms);
@@ -99,6 +99,52 @@ namespace InventoryManagementSystem.Repository
                 {
                     throw new DBConcurrencyException("The record has been modified by another user. Please refresh and try again.");
                 }
+            }
+        }
+
+        public async Task DeleteProductAsync(int productId)
+        {
+            var parms = new List<Parm>
+            {
+                new Parm("@ProductId", SqlDbType.Int, productId)
+            };
+
+            await db.ExecuteNonQueryAsync("spDeleteProduct", parms);
+        }
+
+        public async Task<IEnumerable<Product>> SearchProductsAsync(ProductSearchDTO searchCriteria)
+        {
+            var parms = new List<Parm>
+            {
+                new Parm("@ProductName", SqlDbType.NVarChar, searchCriteria.ProductName),
+                new Parm("@CategoryId", SqlDbType.Int, searchCriteria.CategoryId),
+                new Parm("@MinPrice", SqlDbType.Decimal, searchCriteria.MinPrice),
+                new Parm("@MaxPrice", SqlDbType.Decimal, searchCriteria.MaxPrice),
+            };
+
+            try
+            {
+                var dt = await db.ExecuteAsync("spSearchProducts", parms);
+
+                var products = new List<Product>();
+
+                foreach(DataRow row in dt.Rows)
+                {
+                    products.Add(new Product
+                    {
+                        ProductId = Convert.ToInt32(row["ProductId"]),
+                        ProductName = row["ProductName"].ToString(),
+                        Quantity = Convert.ToInt32(row["Quantity"]),
+                        Price = Convert.ToDecimal(row["Price"]),
+                        CategoryId = Convert.ToInt32(row["CategoryId"]),
+                    });
+                }
+
+                return products;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception("An error occurred while searching for products.", ex);
             }
         }
         #endregion

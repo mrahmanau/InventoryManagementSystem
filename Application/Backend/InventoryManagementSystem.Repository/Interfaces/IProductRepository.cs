@@ -13,5 +13,7 @@ namespace InventoryManagementSystem.Repository
         Task<Product> GetProductByNameAsync(string productName);
         Task<IEnumerable<Product>> GetAllProductsAsync();
         Task UpdateProductAsync(Product product);
+        Task DeleteProductAsync(int productId);
+        Task<IEnumerable<Product>> SearchProductsAsync(ProductSearchDTO searchCriteria);
     }
 }

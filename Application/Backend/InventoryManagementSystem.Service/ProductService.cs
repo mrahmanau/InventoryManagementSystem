@@ -67,7 +67,7 @@ namespace InventoryManagementSystem.Service
                 Quantity = productUpdateDTO.Quantity,
                 Price = productUpdateDTO.Price,
                 CategoryId = productUpdateDTO.CategoryId,
-                Version = productUpdateDTO.Version
+                //Version = productUpdateDTO.Version
             };
 
             try
@@ -77,6 +77,23 @@ namespace InventoryManagementSystem.Service
             catch(DBConcurrencyException ex)
             {
                 throw new ArgumentException(ex.Message, ex);
+            }
+        }
+
+        public async Task DeleteProductAsync(int productId)
+        {
+            await repo.DeleteProductAsync(productId);
+        }
+
+        public async Task<IEnumerable<Product>> SearchProductsAsync(ProductSearchDTO searchCriteria)
+        {
+            try
+            {
+                return await repo.SearchProductsAsync(searchCriteria);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while searching for products.", ex);
             }
         }
     }

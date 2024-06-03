@@ -59,5 +59,34 @@ namespace InventoryManagementSystem.Controllers
                 return BadRequest(new { Message = "The record has been modified by another user. Please refresh and try again.", Details = ex.Message });
             }
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteProductAsync(int id)
+        {
+            try
+            {
+                await productService.DeleteProductAsync(id);
+                return NoContent();
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while deleting the product.", error = ex.Message });
+
+            }
+        }
+
+        [HttpPost("search")]
+        public async Task<IActionResult> SearchProducts([FromBody] ProductSearchDTO searchCriteria)
+        {
+            try
+            {
+                var products = await productService.SearchProductsAsync(searchCriteria);
+                return Ok(products);
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while searching for products.", error = ex.Message });
+            }
+        }
     }
 }
