@@ -12,5 +12,7 @@ namespace InventoryManagementSystem.Service
         Task AddProductAsync(ProductDTO productDTO);
         Task<IEnumerable<ProductDTO>> GetAllProductsAsync();
         Task UpdateProductAsync(ProductUpdateDTO productUpdateDTO);
+        Task DeleteProductAsync(int productId);
+        Task<IEnumerable<Product>> SearchProductsAsync(ProductSearchDTO searchCriteria);
     }
 }
