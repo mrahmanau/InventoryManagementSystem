@@ -4,11 +4,12 @@ import { CategoryDTO } from '../../models/CategoryDTO';
 import { ProductService } from '../../services/product.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-products-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NgxPaginationModule],
   templateUrl: './products-list.component.html',
   styleUrl: './products-list.component.css',
 })
@@ -16,6 +17,10 @@ export class ProductsListComponent implements OnInit {
   products: ProductDTO[] = [];
   categories: CategoryDTO[] = [];
   categoryMap: { [key: number]: string } = {};
+  page: number = 1;
+  pageSize: number = 6;
+  successMessage: string | null = null;
+  errorMessage: string | null = null;
 
   constructor(private productService: ProductService, private router: Router) {}
 
@@ -50,6 +55,7 @@ export class ProductsListComponent implements OnInit {
   editProduct(product: ProductDTO): void {
     // Placeholder for edit product logic
     console.log('Edit product', product);
+    this.router.navigate(['/product-update', product.productId]);
   }
 
   viewProductDetails(product: ProductDTO): void {
@@ -60,6 +66,20 @@ export class ProductsListComponent implements OnInit {
 
   deleteProduct(productId: number): void {
     // Placeholder for delete product logic
-    console.log('Delete product with ID', productId);
+    if (confirm('Are you sure you want to delete this product?')) {
+      console.log('Confirmed deletion for product with ID:', productId);
+      this.productService.deleteProduct(productId).subscribe(
+        () => {
+          console.log('Product deleted successfully with ID:', productId);
+          this.successMessage = 'Product deleted successfully';
+          this.loadProducts();
+        },
+        (error) => {
+          console.error('Error deleting product with ID:', productId, error);
+          (this.errorMessage = 'Error deleting product. Please try again.'),
+            error;
+        }
+      );
+    }
   }
 }

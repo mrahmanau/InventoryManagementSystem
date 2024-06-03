@@ -9,6 +9,7 @@ import { RoleGuard } from './components/auth/roleguard/role-guard';
 import { AddProductComponent } from './components/add-product/add-product.component';
 import { ProductsListComponent } from './components/products-list/products-list.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
+import { ProductUpdateComponent } from './components/product-update/product-update.component';
 
 export const routes: Routes = [
   {
@@ -49,6 +50,13 @@ export const routes: Routes = [
   {
     path: 'product-details/:id',
     component: ProductDetailsComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { expectedRole: 'Admin' },
+  },
+
+  {
+    path: 'product-update/:id',
+    component: ProductUpdateComponent,
     canActivate: [AuthGuard, RoleGuard],
     data: { expectedRole: 'Admin' },
   },
