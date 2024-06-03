@@ -1,0 +1,135 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Update Product</h3>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="productUpdateForm" (ngSubmit)="updateProduct()">
+            <input type="hidden" formControlName="version" />
+            <div *ngIf="successMessage" class="alert alert-success">
+              {{ successMessage }}
+            </div>
+            <div *ngIf="errorMessage" class="alert alert-danger">
+              {{ errorMessage }}
+            </div>
+            <div class="form-group mb-3">
+              <label for="productName" class="form-label">Product Name:</label>
+              <input
+                type="text"
+                id="productName"
+                formControlName="productName"
+                class="form-control"
+              />
+              <div
+                *ngIf="
+                  productUpdateForm.get('productName')?.invalid &&
+                  productUpdateForm.get('productName')?.touched
+                "
+                class="text-danger"
+              >
+                <small
+                  *ngIf="productUpdateForm.get('productName')?.errors?.['required']"
+                  >Product name is required</small
+                >
+                <small
+                  *ngIf="productUpdateForm.get('productName')?.errors?.['minlength']"
+                  >Product name must be at least 2 characters</small
+                >
+              </div>
+            </div>
+            <div class="form-group mb-3">
+              <label for="quantity" class="form-label">Quantity:</label>
+              <input
+                id="quantity"
+                formControlName="quantity"
+                type="number"
+                class="form-control"
+              />
+              <div
+                *ngIf="
+                  productUpdateForm.get('quantity')?.invalid &&
+                  productUpdateForm.get('quantity')?.touched
+                "
+                class="text-danger"
+              >
+                <small
+                  *ngIf="productUpdateForm.get('quantity')?.errors?.['required']"
+                  >Quantity is required</small
+                >
+                <small
+                  *ngIf="productUpdateForm.get('quantity')?.errors?.['min']"
+                  >Quantity must be greater than zero
+                </small>
+                <small
+                  *ngIf="productUpdateForm.get('quantity')?.errors?.['pattern']"
+                >
+                  and it must be a whole number</small
+                >
+              </div>
+            </div>
+            <div class="form-group mb-3">
+              <label for="price" class="form-label">Price:</label>
+              <input
+                id="price"
+                formControlName="price"
+                type="number"
+                class="form-control"
+              />
+              <div
+                *ngIf="
+                  productUpdateForm.get('price')?.invalid &&
+                  productUpdateForm.get('price')?.touched
+                "
+                class="text-danger"
+              >
+                <small
+                  *ngIf="productUpdateForm.get('price')?.errors?.['required']"
+                  >Price is required</small
+                >
+                <small *ngIf="productUpdateForm.get('price')?.errors?.['min']"
+                  >Price cannot be negative and must be greater than zero</small
+                >
+              </div>
+            </div>
+            <div class="form-group mb-3">
+              <label for="categoryId" class="form-label">Category:</label>
+              <select
+                id="categoryId"
+                formControlName="categoryId"
+                class="form-control"
+              >
+                <option
+                  *ngFor="let category of categories"
+                  [value]="category.categoryId"
+                >
+                  {{ category.categoryName }}
+                </option>
+              </select>
+              <div
+                *ngIf="
+                  productUpdateForm.get('categoryId')?.invalid &&
+                  productUpdateForm.get('categoryId')?.touched
+                "
+                class="text-danger"
+              >
+                <small
+                  *ngIf="productUpdateForm.get('categoryId')?.errors?.['required']"
+                  >Category is required</small
+                >
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Edit Product</button>
+          </form>
+        </div>
+      </div>
+      <div class="card-footer mt-4">
+        <button class="btn btn-primary" (click)="goBack()">
+          Back to Product List
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
