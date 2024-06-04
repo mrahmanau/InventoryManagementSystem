@@ -10,11 +10,12 @@ import {
   withFetch,
 } from '@angular/common/http';
 import { AuthInterceptor } from './components/auth/interceptor/auth.interceptor';
+import { ReactiveFormsModule } from '@angular/forms';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
-    importProvidersFrom(HttpClientModule),
+    importProvidersFrom(HttpClientModule, ReactiveFormsModule),
     provideHttpClient(withFetch()),
     provideClientHydration(),
     {

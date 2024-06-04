@@ -5,11 +5,13 @@ import { ProductService } from '../../services/product.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-products-list',
   standalone: true,
-  imports: [CommonModule, NgxPaginationModule],
+  imports: [CommonModule, NgxPaginationModule, ReactiveFormsModule],
   templateUrl: './products-list.component.html',
   styleUrl: './products-list.component.css',
 })
@@ -19,10 +21,23 @@ export class ProductsListComponent implements OnInit {
   categoryMap: { [key: number]: string } = {};
   page: number = 1;
   pageSize: number = 6;
+  searchForm: FormGroup;
   successMessage: string | null = null;
   errorMessage: string | null = null;
 
-  constructor(private productService: ProductService, private router: Router) {}
+  constructor(
+    private productService: ProductService,
+    private authService: AuthService,
+    private fb: FormBuilder,
+    private router: Router
+  ) {
+    this.searchForm = this.fb.group({
+      productName: [''],
+      categoryId: [''],
+      minPrice: [''],
+      maxPrice: [''],
+    });
+  }
 
   ngOnInit(): void {
     this.loadCategories();
@@ -81,5 +96,9 @@ export class ProductsListComponent implements OnInit {
         }
       );
     }
+  }
+
+  isAdmin(): boolean {
+    return this.authService.getUserRole() === 'Admin';
   }
 }

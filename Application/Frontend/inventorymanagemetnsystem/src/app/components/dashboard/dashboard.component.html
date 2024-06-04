@@ -1,14 +1,59 @@
-<div class="container mt-5">
+<div class="container">
   <div class="row">
-    <div class="col-md-6 offset-md-3">
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">Dashboard</h3>
+    <div class="col-md-8">
+      <div class="card border-primary">
+        <div class="card-header bg-primary text-white">
+          <h3 class="card-title">Welcome, {{ firstName }}!</h3>
         </div>
         <div class="card-body">
-          <p><strong>Full Name:</strong> {{ firstName }} {{ lastName }}</p>
+          <p class="lead">
+            You are logged in as <strong>{{ role }}</strong
+            >.
+          </p>
+          <p class="mb-4">Here are some highlights:</p>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="card border-secondary">
+                <div class="card-body">
+                  <h5 class="card-title text-secondary">Recent Activity</h5>
+                  <ul class="list-group">
+                    <li class="list-group-item">Product updated</li>
+                    <li class="list-group-item">User registered</li>
+                    <li class="list-group-item">New order received</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card border-success">
+                <div class="card-body">
+                  <h5 class="card-title text-success">Notifications</h5>
+                  <ul class="list-group">
+                    <li class="list-group-item">
+                      System update scheduled for tomorrow
+                    </li>
+                    <li class="list-group-item">
+                      Reminder: Complete your profile
+                    </li>
+                    <li class="list-group-item">
+                      New feature launched: Analytics dashboard
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card border-info">
+        <div class="card-body">
+          <h5 class="card-title text-info">Profile Information</h5>
+          <p><strong>Name:</strong> {{ firstName }}</p>
+          <p><strong>Email:</strong> {{ email }}</p>
           <p><strong>Role:</strong> {{ role }}</p>
-          <p><strong>Email Address:</strong> {{ email }}</p>
+          <a href="#" class="btn btn-info">Edit Profile</a>
         </div>
       </div>
     </div>

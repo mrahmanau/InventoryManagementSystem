@@ -17,7 +17,12 @@ export class DashboardComponent {
   constructor(private authService: AuthService) {
     this.firstName = this.authService.getUserFirstName();
     this.lastName = this.authService.getUserLastName();
+
     this.role = this.authService.getUserRole();
     this.email = this.authService.getUserEmail();
+  }
+
+  getWelcomeMessage(): string {
+    return `Welcome back, ${this.firstName}!`;
   }
 }

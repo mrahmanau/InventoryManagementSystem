@@ -44,14 +44,12 @@ export const routes: Routes = [
   {
     path: 'products-list',
     component: ProductsListComponent,
-    canActivate: [AuthGuard, RoleGuard],
-    data: { expectedRole: 'Admin' },
+    canActivate: [AuthGuard],
   },
   {
     path: 'product-details/:id',
     component: ProductDetailsComponent,
-    canActivate: [AuthGuard, RoleGuard],
-    data: { expectedRole: 'Admin' },
+    canActivate: [AuthGuard],
   },
 
   {
