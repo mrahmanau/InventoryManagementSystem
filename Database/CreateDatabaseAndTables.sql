@@ -166,6 +166,16 @@ BEGIN
 END;
 GO
 
+-- Get users
+CREATE OR ALTER PROCEDURE spGetUsers
+AS
+BEGIN
+	SELECT UserId, FirstName, LastName
+	FROM Users
+	ORDER BY LastName ASC
+END;
+GO
+
 -- Get user by id
 CREATE OR ALTER PROCEDURE spGetUserById
     @UserId INT
