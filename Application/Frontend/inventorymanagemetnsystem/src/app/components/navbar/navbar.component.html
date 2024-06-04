@@ -23,7 +23,7 @@
         <li class="nav-item" *ngIf="isAuthenticated() && isAdmin()">
           <a routerLink="/admin" class="nav-link">Admin</a>
         </li>
-        <li class="nav-item dropdown" *ngIf="isAuthenticated() && isAdmin()">
+        <li class="nav-item dropdown" *ngIf="isAuthenticated()">
           <a
             class="nav-link dropdown-toggle"
             href="#"
@@ -35,7 +35,7 @@
             Product
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li>
+            <li *ngIf="isAdmin()">
               <a routerLink="/add-product" class="dropdown-item">Add Product</a>
             </li>
 

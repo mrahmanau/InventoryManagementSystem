@@ -13,7 +13,12 @@
           | paginate : { itemsPerPage: pageSize, currentPage: page }
       "
     >
-      <div class="card mb-3">
+      <div class="card mb-4 shadow-sm">
+        <img
+          src="https://via.placeholder.com/150"
+          class="card-img-top"
+          alt="Product Image"
+        />
         <div class="card-body">
           <h5 class="card-title">{{ product.productName }}</h5>
           <p class="card-text">
@@ -28,25 +33,29 @@
           <p class="card-text">
             <strong>Category:</strong> {{ getCategoryName(product.categoryId) }}
           </p>
-          <div class="d-flex">
-            <button
-              class="btn btn-primary buttons-margin"
-              (click)="editProduct(product)"
-            >
-              <i class="fas fa-edit"></i>
-            </button>
-            <button
-              class="btn btn-secondary buttons-margin"
-              (click)="viewProductDetails(product)"
-            >
-              <i class="fas fa-info-circle"></i>
-            </button>
-            <button
-              class="btn btn-danger"
-              (click)="deleteProduct(product.productId)"
-            >
-              <i class="fas fa-trash-alt"></i>
-            </button>
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="btn-group">
+              <button
+                *ngIf="isAdmin()"
+                class="btn btn-sm btn-primary buttons-margin"
+                (click)="editProduct(product)"
+              >
+                <i class="fas fa-edit"></i>
+              </button>
+              <button
+                class="btn btn-sm btn-secondary buttons-margin"
+                (click)="viewProductDetails(product)"
+              >
+                <i class="fas fa-info-circle"></i>
+              </button>
+              <button
+                *ngIf="isAdmin()"
+                class="btn btn-sm btn-danger"
+                (click)="deleteProduct(product.productId)"
+              >
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </div>
           </div>
         </div>
       </div>
