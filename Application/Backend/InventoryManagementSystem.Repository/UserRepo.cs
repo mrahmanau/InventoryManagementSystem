@@ -123,6 +123,25 @@ namespace InventoryManagementSystem.Repository
                 }
             };
         }
+
+        public async Task<IEnumerable<User>> GetUsersAsync()
+        {
+            var users = new List<User>();
+
+            var dt = await db.ExecuteAsync("spGetUsers", null);
+
+            foreach(DataRow row in dt.Rows)
+            {
+                users.Add(new User
+                {
+                    UserId = Convert.ToInt32(row["UserId"]),
+                    FirstName = row["FirstName"].ToString(),
+                    LastName = row["LastName"].ToString()
+                });
+            }
+
+            return users;
+        }
         #endregion
     }
 }
