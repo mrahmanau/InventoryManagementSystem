@@ -1,7 +1,9 @@
 ﻿using DAL;
 using InventoryManagementSystem.Model;
 using InventoryManagementSystem.Types;
+using Microsoft.Data.SqlClient;
 using System.Data;
+using System.Diagnostics.Eventing.Reader;
 using static Azure.Core.HttpHeader;
 
 namespace InventoryManagementSystem.Repository
@@ -142,6 +144,63 @@ namespace InventoryManagementSystem.Repository
 
             return users;
         }
+
+        public async Task DeleteUserAsync(int userId)
+        {
+            try
+            {
+                var parms = new List<Parm>
+                {
+                    new Parm("@UserId", SqlDbType.Int, userId)
+                };
+
+                await db.ExecuteNonQueryAsync("spDeleteUser", parms);
+            }
+            catch(Exception ex)
+            {
+                throw new Exception("An error occurred while deleting the user", ex);
+            }
+        }
+
+        public async Task UpdateUserAsync(UserDTO user)
+        {
+            try
+            {
+                var parms = new List<Parm>
+                {
+                    new Parm("@UserId", SqlDbType.Int, user.UserId),
+                    new Parm("@FirstName", SqlDbType.NVarChar, user.FirstName),
+                    new Parm("@LastName", SqlDbType.NVarChar, user.LastName),
+                    new Parm("@UserName", SqlDbType.NVarChar, user.UserName),
+                    new Parm("@Email", SqlDbType.NVarChar, user.Email),
+                    new Parm("@RoleId", SqlDbType.Int, user.RoleId)
+                };
+
+                await db.ExecuteNonQueryAsync("spUpdateUser", parms);
+            }
+            catch(SqlException ex)
+            {
+                if (ex.Number == 50000 && ex.Message.Contains("Duplicate username."))
+                {
+                    throw new RepositoryException("Please choose another username as it is already taken by another user.", ex);
+                }
+                else
+                {
+                    throw new Exception("An error occurred while updating the user", ex);
+                }
+            }
+        }
         #endregion
+
+        public class RepositoryException : Exception
+        {
+            public RepositoryException(string message) : base(message)
+            {
+            }
+
+            public RepositoryException(string message, Exception innerException) : base(message, innerException)
+            {
+            }
+        }
     }
 }

@@ -10,5 +10,9 @@ namespace InventoryManagementSystem.Service
     public interface IUserService
     {
         Task<IEnumerable<UsersListDTO>> GetUsersAsync();
+        Task<UserDTO> GetUserByIdAsync(int userId);
+        Task DeleteUserAsync(int userId);
+        Task UpdateUserAsync(UserDTO user);
+
     }
 }
