@@ -188,6 +188,46 @@ BEGIN
 END;
 GO
 
+-- Update user
+CREATE OR ALTER PROCEDURE spUpdateUser
+	@UserId INT,
+    @FirstName NVARCHAR(255),
+    @LastName NVARCHAR(255),
+    @Username NVARCHAR(255),
+    @Email NVARCHAR(255),
+    @RoleId INT
+AS
+BEGIN
+	    -- Check if the username already exists for another user
+	IF EXISTS(SELECT 1 FROM Users WHERE Username = @Username AND UserId != @UserId)
+	BEGIN
+        RAISERROR('Duplicate username.', 16, 1);
+        RETURN;
+    END
+
+	    -- Update the user details
+		UPDATE Users
+		SET
+			FirstName = @FirstName,
+			LastName = @LastName,
+			Username = @Username,
+			Email = @Email,
+			RoleId = @RoleId
+		WHERE UserId = @UserId;
+END;
+GO
+
+
+-- Delete user
+CREATE OR ALTER PROCEDURE spDeleteUser
+	@UserId INT
+AS
+BEGIN
+	DELETE FROM Users
+	WHERE UserId = @UserId;
+END;
+GO
+
 -- Add a product
 CREATE OR ALTER PROCEDURE spAddProduct
 	@ProductName NVARCHAR(255),
