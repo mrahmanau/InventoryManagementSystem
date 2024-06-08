@@ -50,7 +50,7 @@ namespace InventoryManagementSystem.Repository
                 }
             };
         }
-        public async Task AddUserAsync(User user)
+        public async Task<int> AddUserAsync(User user)
         {
             var parms = new List<Parm>
             {
@@ -59,10 +59,13 @@ namespace InventoryManagementSystem.Repository
                 new Parm("@Username", SqlDbType.NVarChar, user.Username, 50),
                 new Parm("@Email", SqlDbType.NVarChar, user.Email, 100),
                 new Parm("@HashedPassword", SqlDbType.NVarChar, user.HashedPassword, 200),
-                new Parm("@RoleId", SqlDbType.Int, user.RoleId)
+                new Parm("@RoleId", SqlDbType.Int, user.RoleId),
+                new Parm("@EmailConfirmed", SqlDbType.Bit, user.EmailConfirmed),
+                new Parm("@EmailConfirmationToken", SqlDbType.NVarChar, user.EmailConfirmationToken, 200)
             };
 
-            await db.ExecuteNonQueryAsync("spAddUser", parms);
+            var userId = await db.ExecuteScalarAsync<int>("spAddUser", parms);
+            return userId;
         }
 
         public async Task<User> GetUserByUsernameAndPasswordAsync(string username, string hashedPassword)
@@ -96,7 +99,7 @@ namespace InventoryManagementSystem.Repository
             };
         }
 
-        public async Task<User> GetUserByIdAsync(int userId)
+        public async Task<UserDTO> GetUserByIdAsync(int userId)
         {
             var parms = new List<Parm>
             {
@@ -109,21 +112,35 @@ namespace InventoryManagementSystem.Repository
                 return null;
 
             var row = dt.Rows[0];
-            return new User
+
+            return new UserDTO
             {
                 UserId = (int)row["UserId"],
                 FirstName = row["FirstName"].ToString(),
                 LastName = row["LastName"].ToString(),
-                Username = row["Username"].ToString(),
+                UserName = row["Username"].ToString(),
                 Email = row["Email"].ToString(),
-                HashedPassword = row["HashedPassword"].ToString(),
                 RoleId = (int)row["RoleId"],
-                Role = new Role
-                {
-                    RoleId = (int)row["RoleId"],
-                    RoleName = row["RoleName"].ToString()
-                }
+                RoleName = row["RoleName"].ToString(),
+                TotalLogs = (int)row["TotalLogs"],
+                LastActivity = row["LastActivity"] == DBNull.Value ? (DateTime?)null : (DateTime)row["LastActivity"],
+                LastAction = row["LastAction"].ToString()
             };
+            //return new User
+            //{
+            //    UserId = (int)row["UserId"],
+            //    FirstName = row["FirstName"].ToString(),
+            //    LastName = row["LastName"].ToString(),
+            //    Username = row["Username"].ToString(),
+            //    Email = row["Email"].ToString(),
+            //    HashedPassword = row["HashedPassword"].ToString(),
+            //    RoleId = (int)row["RoleId"],
+            //    Role = new Role
+            //    {
+            //        RoleId = (int)row["RoleId"],
+            //        RoleName = row["RoleName"].ToString()
+            //    }
+            //};
         }
 
         public async Task<IEnumerable<User>> GetUsersAsync()
@@ -188,6 +205,30 @@ namespace InventoryManagementSystem.Repository
                 {
                     throw new Exception("An error occurred while updating the user", ex);
                 }
+            }
+        }
+
+        public async Task AddLogAsync(UserActivityLogDTO log)
+        {
+            try
+            {
+                var parms = new List<Parm>
+                {
+                    new Parm("@UserId", SqlDbType.Int, log.UserId),
+                    new Parm("@Action", SqlDbType.NVarChar, log.Action),
+                    new Parm("@Timestamp", SqlDbType.DateTime, log.Timestamp),
+                    new Parm("@Details", SqlDbType.NVarChar, log.Details)
+                };
+
+                await db.ExecuteNonQueryAsync("spAddUserActivityLog", parms);
+            }
+            catch(SqlException ex)
+            {
+                throw new Exception("An error occurred while adding the log entry to the database.", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An unexpected error occurred while adding the log entry.", ex);
             }
         }
         #endregion

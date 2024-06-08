@@ -17,5 +17,8 @@ namespace InventoryManagementSystem.Model
         public string HashedPassword { get; set; }
         public int RoleId { get; set; } // Foreign key to Role entity
         public Role Role { get; set; }  // Navigation property to Role entity
+        public bool EmailConfirmed { get; set; } 
+        public string EmailConfirmationToken { get; set; }
+
     }
 }

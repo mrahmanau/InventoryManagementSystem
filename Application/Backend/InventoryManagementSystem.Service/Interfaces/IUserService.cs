@@ -13,6 +13,6 @@ namespace InventoryManagementSystem.Service
         Task<UserDTO> GetUserByIdAsync(int userId);
         Task DeleteUserAsync(int userId);
         Task UpdateUserAsync(UserDTO user);
-
+        Task AddLogAsync(UserActivityLogDTO log);
     }
 }

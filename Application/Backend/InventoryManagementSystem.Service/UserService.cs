@@ -44,10 +44,13 @@ namespace InventoryManagementSystem.Service
                     UserId = user.UserId,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
-                    UserName = user.Username,
+                    UserName = user.UserName,
                     Email = user.Email,
                     RoleId = user.RoleId,
-                    RoleName = user.Role.RoleName
+                    RoleName = user.RoleName,
+                    TotalLogs = user.TotalLogs,
+                    LastActivity = user.LastActivity,
+                    LastAction = user.LastAction,
                 };
 
             }
@@ -86,6 +89,18 @@ namespace InventoryManagementSystem.Service
             catch(Exception ex)
             {
                 throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task AddLogAsync(UserActivityLogDTO log)
+        {
+            try
+            {
+                await repo.AddLogAsync(log);
+            }
+            catch(Exception ex)
+            {
+                throw new Exception("An error occurred while logging the activity.", ex);
             }
         }
 

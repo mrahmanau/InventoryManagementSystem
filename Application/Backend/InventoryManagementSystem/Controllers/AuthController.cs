@@ -13,11 +13,13 @@ namespace InventoryManagementSystem.Controllers
     {
         private readonly IAuthService _authService;
         private readonly ITokenService _tokenService;
+        private readonly IUserService _userService;
 
-        public AuthController(IAuthService authService, ITokenService tokenService)
+        public AuthController(IAuthService authService, ITokenService tokenService, IUserService userService)
         {
             _authService = authService;
             _tokenService = tokenService;
+            _userService = userService;
         }
 
         [HttpPost("register")]
@@ -26,6 +28,18 @@ namespace InventoryManagementSystem.Controllers
             try
             {
                 var result = await _authService.RegisterAsync(userRegistrationDTO);
+
+                // Log the registration action
+                var log = new UserActivityLogDTO
+                {
+                    UserId = result.UserId,
+                    Action = "Register",
+                    Timestamp = DateTime.UtcNow,
+                    Details = "User registered successfully"
+                };
+
+                await _userService.AddLogAsync(log);
+
                 return Ok(new { message = result });
             }
             catch (UserAlreadyExistsException ex)
@@ -45,6 +59,17 @@ namespace InventoryManagementSystem.Controllers
             {
                 var user = await _authService.LoginAsync(loginDTO);
                 var token = _tokenService.GenerateJwtToken(user);
+
+                // Log the login action
+                var log = new UserActivityLogDTO
+                {
+                    UserId = user.UserId,
+                    Action = "Login",
+                    Timestamp = DateTime.UtcNow,
+                    Details = "User logged in"
+                };
+
+                await _userService.AddLogAsync(log);
 
                 return new LoginOutputDTO
                 {
