@@ -15,5 +15,9 @@ namespace InventoryManagementSystem.Model
         public string Email { get; set; }
         public int RoleId { get; set; }
         public string RoleName { get; set; }
+
+        public string LastAction {  get; set; }
+        public int TotalLogs { get; set; }
+        public DateTime? LastActivity { get; set; }
     }
 }

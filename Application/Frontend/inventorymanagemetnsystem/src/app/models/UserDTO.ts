@@ -6,4 +6,7 @@ export interface UserDTO {
   email: string;
   roleId: number;
   roleName: string;
+  lastAction: string;
+  totalLogs: number;
+  lastActivity: Date;
 }

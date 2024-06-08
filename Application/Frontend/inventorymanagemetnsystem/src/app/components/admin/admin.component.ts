@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { UsersListDTO } from '../../models/UserListDTO';
@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
   imports: [CommonModule, HttpClientModule, FormsModule],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.css',
+  providers: [DatePipe],
 })
 export class AdminComponent implements OnInit {
   users: UsersListDTO[] = [];
@@ -22,7 +23,7 @@ export class AdminComponent implements OnInit {
   errorMessage: string | null = null;
   isEditMode: boolean = false;
 
-  constructor(private usersService: UsersService) {}
+  constructor(private usersService: UsersService, private datePipe: DatePipe) {}
 
   ngOnInit(): void {
     this.loadUsers();
@@ -121,5 +122,9 @@ export class AdminComponent implements OnInit {
   clearMessages(): void {
     this.message = null;
     this.errorMessage = null;
+  }
+
+  formatDate(date: Date): string {
+    return this.datePipe.transform(date, 'longDate') || '';
   }
 }

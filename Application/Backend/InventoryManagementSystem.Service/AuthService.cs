@@ -14,10 +14,19 @@ namespace InventoryManagementSystem.Service
 {
     public class AuthService : IAuthService
     {
-        public readonly UserRepo repo = new();
+        public readonly UserRepo _repo;
+        private readonly IEmailService _emailService;
+
+        public AuthService(UserRepo repo, IEmailService emailService)
+        {
+            _repo = repo;
+            _emailService = emailService;
+        }
+
+
 
         #region Public Methods
-        public async Task<string> RegisterAsync(UserRegistrationDTO userRegistrationDTO)
+        public async Task<RegisterResultDTO> RegisterAsync(UserRegistrationDTO userRegistrationDTO)
         {
             try
             {
@@ -32,7 +41,7 @@ namespace InventoryManagementSystem.Service
                 }
 
                 // Check if user already exists
-                var existingUser = await repo.GetUserByUsernameAsync(userRegistrationDTO.Username);
+                var existingUser = await _repo.GetUserByUsernameAsync(userRegistrationDTO.Username);
                 if (existingUser != null)
                 {
                     throw new UserAlreadyExistsException("User already exists.");
@@ -49,12 +58,20 @@ namespace InventoryManagementSystem.Service
                     Email = userRegistrationDTO.Email,
                     HashedPassword = HashPassword(userRegistrationDTO.Password),
                     RoleId = userRegistrationDTO.RoleId,
+                    EmailConfirmed = false,
+                    EmailConfirmationToken = GenerateEmailConfirmationToken()
                 };
 
-                // Add user to the repository
-                await repo.AddUserAsync(user);
+                // Add user to the repository and get the new user's ID
+                var userId = await _repo.AddUserAsync(user);
 
-                return "User registered successfully";
+                await _emailService.SendEmailConfirmationAsync(user.Email, user.EmailConfirmationToken);
+
+                return new RegisterResultDTO
+                {
+                    UserId = userId,
+                    Message = "User registered successfully",
+                };
             }
             catch(UserAlreadyExistsException ex)
             {
@@ -74,7 +91,7 @@ namespace InventoryManagementSystem.Service
         {
             var hashedPassword = HashPassword(loginDTO.Password);
 
-            var user = await repo.GetUserByUsernameAndPasswordAsync(loginDTO.Username, hashedPassword);
+            var user = await _repo.GetUserByUsernameAndPasswordAsync(loginDTO.Username, hashedPassword);
             if (user == null)
             {
                 throw new Exception("Invalid username or password.");
@@ -106,6 +123,16 @@ namespace InventoryManagementSystem.Service
                 }
 
                 return builder.ToString();
+            }
+        }
+
+        private string GenerateEmailConfirmationToken()
+        {
+            using(var rng = new RNGCryptoServiceProvider())
+            {
+                var tokenData = new byte[32];
+                rng.GetBytes(tokenData);
+                return Convert.ToBase64String(tokenData);
             }
         }
 

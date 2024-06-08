@@ -9,7 +9,7 @@ namespace InventoryManagementSystem.Service
 {
     public interface IAuthService
     {
-        Task<string> RegisterAsync(UserRegistrationDTO userRegistrationDto);
+        Task<RegisterResultDTO> RegisterAsync(UserRegistrationDTO userRegistrationDto);
         Task<User> LoginAsync(LoginDTO loginDTO);
     }
 }

@@ -68,7 +68,21 @@ namespace DAL
             return retVal;
         }
 
-        public async Task<object?> ExecuteScalarAsync(string cmdText, List<Parm>? parms = null, CommandType cmdType = CommandType.StoredProcedure)
+        //public async Task<object?> ExecuteScalarAsync(string cmdText, List<Parm>? parms = null, CommandType cmdType = CommandType.StoredProcedure)
+        //{
+        //    object? retVal;
+        //    SqlCommand cmd = CreateCommand(cmdText, parms, cmdType);
+
+        //    using (cmd.Connection)
+        //    {
+        //        cmd.Connection.Open();
+        //        retVal = await cmd.ExecuteScalarAsync();
+        //    }
+
+        //    return retVal;
+        //}
+
+        public async Task<T> ExecuteScalarAsync<T>(string cmdText, List<Parm>? parms = null, CommandType cmdType = CommandType.StoredProcedure)
         {
             object? retVal;
             SqlCommand cmd = CreateCommand(cmdText, parms, cmdType);
@@ -79,8 +93,9 @@ namespace DAL
                 retVal = await cmd.ExecuteScalarAsync();
             }
 
-            return retVal;
+            return (T)Convert.ChangeType(retVal, typeof(T));
         }
+
 
         public int ExecuteNonQuery(string cmdText, List<Parm>? parms = null, CommandType cmdType = CommandType.StoredProcedure)
         {

@@ -76,17 +76,22 @@
                     ></button>
                   </div>
                   <div class="card-body" *ngIf="!isEditMode">
-                    <p class="card-text">
-                      <strong>Name:</strong> {{ selectedUser.firstName }}
-                      {{ selectedUser.lastName }}
+                    <p class="card-text" *ngIf="selectedUser.totalLogs === 0">
+                      {{ selectedUser.lastName }} was not active for a while.
+                    </p>
+                    <p class="card-text" *ngIf="selectedUser.totalLogs > 0">
+                      {{ selectedUser.lastName }} was last active on
+                      {{ selectedUser.lastActivity | date : "long" }} and the
+                      last action was <em>{{ selectedUser.lastAction }}</em
+                      >. There were total {{ selectedUser.totalLogs }} logs
+                      recored in recent days.
                     </p>
                     <p class="card-text">
+                      <strong>Full Name:</strong> {{ selectedUser.firstName }}
+                      {{ selectedUser.lastName }} <br />
                       <strong>Username:</strong> {{ selectedUser.userName }}
-                    </p>
-                    <p class="card-text">
-                      <strong>Email:</strong> {{ selectedUser.email }}
-                    </p>
-                    <p class="card-text">
+                      <br />
+                      <strong>Email:</strong> {{ selectedUser.email }} <br />
                       <strong>Role:</strong> {{ selectedUser.roleName }}
                     </p>
                   </div>
