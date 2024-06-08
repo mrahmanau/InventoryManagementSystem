@@ -40,6 +40,8 @@ CREATE TABLE Users (
     Email NVARCHAR(100) NOT NULL,
     HashedPassword NVARCHAR(200) NOT NULL,
     RoleId INT NOT NULL,
+	EmailConfirmed BIT DEFAULT 0,
+    EmailConfirmationToken NVARCHAR(200) NULL, 
 	Version ROWVERSION,
     FOREIGN KEY (RoleId) REFERENCES Roles(RoleId)
 );
@@ -66,6 +68,20 @@ CREATE TABLE Products (
 	Version ROWVERSION,
     FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID)
 );
+
+-- Create the UserActivityLog table
+IF OBJECT_ID('UserActivityLog', 'U') IS NOT NULL
+DROP TABLE UserActivityLog
+
+CREATE TABLE UserActivityLog (
+    Id INT PRIMARY KEY IDENTITY,
+    UserId INT NOT NULL,
+    Action NVARCHAR(255) NOT NULL,
+    Timestamp DATETIME NOT NULL,
+    Details NVARCHAR(255),
+    FOREIGN KEY (UserId) REFERENCES Users(UserId)
+);
+
 
 
 /*
@@ -145,11 +161,15 @@ CREATE OR ALTER PROCEDURE spAddUser
     @Username NVARCHAR(50),
     @Email NVARCHAR(100),
     @HashedPassword NVARCHAR(200),
-    @RoleId INT
+    @RoleId INT,
+	@EmailConfirmed BIT,
+	@EmailConfirmationToken NVARCHAR(200)
 AS
 BEGIN
-    INSERT INTO Users (FirstName, LastName, Username, Email, HashedPassword, RoleId)
-    VALUES (@FirstName, @LastName, @Username, @Email, @HashedPassword, @RoleId);
+    INSERT INTO Users (FirstName, LastName, Username, Email, HashedPassword, RoleId, EmailConfirmed, EmailConfirmationToken)
+    VALUES (@FirstName, @LastName, @Username, @Email, @HashedPassword, @RoleId, @EmailConfirmed, @EmailConfirmationToken);
+
+	SELECT SCOPE_IDENTITY() AS UserId;
 END;
 GO
 
@@ -177,11 +197,25 @@ END;
 GO
 
 -- Get user by id
+--CREATE OR ALTER PROCEDURE spGetUserById
+--    @UserId INT
+--AS
+--BEGIN
+--    SELECT u.UserId, u.FirstName, u.LastName, u.Username, u.Email, u.HashedPassword, u.RoleId, r.RoleName
+--    FROM Users u
+--    INNER JOIN Roles r ON u.RoleId = r.RoleId
+--    WHERE u.UserId = @UserId;
+--END;
+--GO
+
 CREATE OR ALTER PROCEDURE spGetUserById
     @UserId INT
 AS
 BEGIN
-    SELECT u.UserId, u.FirstName, u.LastName, u.Username, u.Email, u.HashedPassword, u.RoleId, r.RoleName
+    SELECT u.UserId, u.FirstName, u.LastName, u.Username, u.Email, u.HashedPassword, u.RoleId, r.RoleName,
+	(SELECT COUNT(*) FROM UserActivityLog WHERE UserId = @UserId) AS TotalLogs,
+	(SELECT MAX(Timestamp) FROM UserActivityLog WHERE UserId = @UserId) AS LastActivity,
+	(SELECT TOP 1 Action FROM UserActivityLog WHERE UserId = @UserId ORDER BY Timestamp DESC) AS LastAction
     FROM Users u
     INNER JOIN Roles r ON u.RoleId = r.RoleId
     WHERE u.UserId = @UserId;
@@ -226,6 +260,19 @@ BEGIN
 	DELETE FROM Users
 	WHERE UserId = @UserId;
 END;
+GO
+
+-- Add user activity log
+CREATE OR ALTER PROCEDURE spAddUserActivityLog
+	@UserId INT,
+	@Action NVARCHAR(255),
+	@Timestamp DATETIME,
+	@Details NVARCHAR (255)
+AS
+BEGIN
+	INSERT INTO UserActivityLog (UserId, Action, Timestamp, Details)
+	VALUES(@UserId, @Action, @Timestamp, @Details)
+END
 GO
 
 -- Add a product
