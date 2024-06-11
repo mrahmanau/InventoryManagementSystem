@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { API_URL } from './shared.service';
-import { Observable } from 'rxjs';
+import { Observable, catchError, tap, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { UserRegistrationDTO } from '../models/UserRegistrationDTO';
 import { UserLoginDTO } from '../models/UserLoginDTO';
@@ -96,5 +96,12 @@ export class AuthService {
     if (typeof localStorage !== 'undefined') {
       localStorage.removeItem('token');
     }
+  }
+
+  confirmEmail(token: string): Observable<any> {
+    return this.http.get(`${API_URL}/Auth/confirm-email`, {
+      params: { token },
+      responseType: 'text',
+    });
   }
 }

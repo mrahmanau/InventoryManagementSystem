@@ -10,6 +10,7 @@ import { AddProductComponent } from './components/add-product/add-product.compon
 import { ProductsListComponent } from './components/products-list/products-list.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { ProductUpdateComponent } from './components/product-update/product-update.component';
+import { EmailConfirmationComponent } from './components/auth/email-confirmation/email-confirmation.component';
 
 export const routes: Routes = [
   {
@@ -24,6 +25,7 @@ export const routes: Routes = [
     path: 'login',
     component: LoginComponent,
   },
+  { path: 'confirm-email', component: EmailConfirmationComponent },
   {
     path: 'dashboard',
     component: DashboardComponent,

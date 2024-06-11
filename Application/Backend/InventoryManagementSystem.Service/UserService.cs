@@ -11,12 +11,17 @@ namespace InventoryManagementSystem.Service
 {
     public class UserService : IUserService
     {
-        public readonly UserRepo repo = new();
+        //public readonly UserRepo repo = new();
+        public readonly IUserRepository _repo;
+        public UserService (IUserRepository repo)
+        {
+            _repo = repo;
+        }
 
         #region Public Methods
         public async Task<IEnumerable<UsersListDTO>> GetUsersAsync()
         {
-            var users = await repo.GetUsersAsync();
+            var users = await _repo.GetUsersAsync();
 
             var usersDTO = users.Select(u => new UsersListDTO
             {
@@ -32,7 +37,7 @@ namespace InventoryManagementSystem.Service
         {
             try
             {
-                var user = await repo.GetUserByIdAsync(userId);
+                var user = await _repo.GetUserByIdAsync(userId);
 
                 if(user == null)
                 {
@@ -64,7 +69,7 @@ namespace InventoryManagementSystem.Service
         {
             try
             {
-                await repo.DeleteUserAsync(userId);
+                await _repo.DeleteUserAsync(userId);
             }
             catch(RepositoryException ex)
             {
@@ -80,7 +85,7 @@ namespace InventoryManagementSystem.Service
         {
             try
             {
-                await repo.UpdateUserAsync(user);
+                await _repo.UpdateUserAsync(user);
             }
             catch(RepositoryException ex)
             {
@@ -96,7 +101,7 @@ namespace InventoryManagementSystem.Service
         {
             try
             {
-                await repo.AddLogAsync(log);
+                await _repo.AddLogAsync(log);
             }
             catch(Exception ex)
             {

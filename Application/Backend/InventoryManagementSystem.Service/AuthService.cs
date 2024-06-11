@@ -14,10 +14,10 @@ namespace InventoryManagementSystem.Service
 {
     public class AuthService : IAuthService
     {
-        public readonly UserRepo _repo;
+        public readonly IUserRepository _repo;
         private readonly IEmailService _emailService;
 
-        public AuthService(UserRepo repo, IEmailService emailService)
+        public AuthService(IUserRepository repo, IEmailService emailService)
         {
             _repo = repo;
             _emailService = emailService;
@@ -87,6 +87,32 @@ namespace InventoryManagementSystem.Service
             }
         }
 
+        public async Task<string> ConfirmEmailAsync(string token)
+        {
+            try
+            {
+                var user = await _repo.GetUserByTokenAsync(token);
+
+                if (user == null || user.EmailConfirmed)
+                {
+                    return "Invalid or expired token.";
+                }
+
+                user.EmailConfirmed = true;
+                user.EmailConfirmationToken = null;
+
+                await _repo.UpdateEmailConfirmationStatusAsync(user);
+
+                return "Email confirmed successfully.";
+            }
+            catch(Exception ex)
+            {
+                throw new ApplicationException("An error occurred while confirming the email.", ex);
+
+            }
+
+        }
+
         public async Task<User> LoginAsync(LoginDTO loginDTO)
         {
             var hashedPassword = HashPassword(loginDTO.Password);
@@ -95,6 +121,11 @@ namespace InventoryManagementSystem.Service
             if (user == null)
             {
                 throw new Exception("Invalid username or password.");
+            }
+
+            if(!user.EmailConfirmed)
+            {
+                throw new Exception("Email not confirmed. Please check your email for a confirmation link.");
             }
 
             return user;

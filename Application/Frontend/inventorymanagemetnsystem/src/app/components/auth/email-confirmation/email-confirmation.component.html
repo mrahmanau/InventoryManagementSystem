@@ -1,0 +1,13 @@
+<p>email-confirmation works!</p>
+
+<div *ngIf="message" class="confirmation-message">
+  <div
+    [ngClass]="{
+      'alert alert-success': isSuccess,
+      'alert alert-danger': !isSuccess
+    }"
+    role="alert"
+  >
+    {{ message }}
+  </div>
+</div>

@@ -3,6 +3,7 @@ using InventoryManagementSystem.Model;
 using InventoryManagementSystem.Service;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using static InventoryManagementSystem.Service.AuthService;
 
 namespace InventoryManagementSystem.Controllers
@@ -49,6 +50,27 @@ namespace InventoryManagementSystem.Controllers
             catch (Exception ex)
             {
                 return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpGet("confirm-email")]
+        public async Task<IActionResult> ConfirmEmail(string token)
+        {
+            try
+            {
+                var decodedToken = WebUtility.UrlDecode(token);
+                var result = await _authService.ConfirmEmailAsync(decodedToken);
+
+                if (result == "Invalid or expired token.")
+                {
+                    return BadRequest(result);
+                }
+
+                return Ok(result);
+            }
+            catch(ApplicationException ex)
+            {
+                return StatusCode(500, ex.Message);
             }
         }
 

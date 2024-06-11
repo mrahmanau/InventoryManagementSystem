@@ -1,5 +1,7 @@
 
+using DAL;
 using InventoryManagementSystem.Interfaces;
+using InventoryManagementSystem.Repository;
 using InventoryManagementSystem.Service;
 using InventoryManagementSystem.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -15,15 +17,32 @@ namespace InventoryManagementSystem
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Configuration
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .AddEnvironmentVariables();
+
             // Add services to the container.
 
             builder.Services.AddControllers();
+
+            builder.Services.AddSingleton<DataAccess>();
 
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<ITokenService, TokenService>();
             builder.Services.AddScoped<IProductService, ProductService>();
             builder.Services.AddScoped<ICategoryService, CategoryService>();
+            builder.Services.AddScoped<IUserRepository, UserRepo>();
+            builder.Services.AddScoped<IEmailService, EmailService>(provider =>
+            {
+                var configuration = provider.GetRequiredService<IConfiguration>();
+                var sendGridApiKey = configuration.GetValue<string>("SendGridApiKey");
+                var baseUrl = configuration.GetValue<string>("AppSettings:BaseUrl");
+                var logger = provider.GetRequiredService<ILogger<EmailService>>();
+                return new EmailService(sendGridApiKey, baseUrl, logger);
+            });
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
