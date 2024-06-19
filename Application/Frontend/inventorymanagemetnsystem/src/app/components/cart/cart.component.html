@@ -1,0 +1,33 @@
+<div class="container mt-5">
+  <h2>Your Cart</h2>
+  <form [formGroup]="cartForm" (ngSubmit)="checkout()">
+    <div *ngFor="let item of cartItems; let i = index" class="row mb-3">
+      <div class="col-md-6">
+        <h5>{{ item.productName }}</h5>
+        <p>Price: {{ item.price | currency }}</p>
+      </div>
+      <div class="col-md-3">
+        <label for="quantity{{ i }}">Quantity</label>
+        <input
+          id="quantity{{ i }}"
+          type="number"
+          [formControlName]="'quantity' + i"
+          (change)="updateQuantity(i)"
+        />
+      </div>
+      <div class="col-md-3">
+        <p>Total: {{ item.price * item.quantity | currency }}</p>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-md-6">
+        <p><strong>Subtotal:</strong> {{ getSubtotal() | currency }}</p>
+        <p><strong>Sales Tax:</strong> {{ getSalesTax() | currency }}</p>
+        <p><strong>Grand Total:</strong> {{ getGrandTotal() | currency }}</p>
+      </div>
+      <div class="col-md-6 text-right">
+        <button type="submit" class="btn btn-primary">Checkout</button>
+      </div>
+    </div>
+  </form>
+</div>

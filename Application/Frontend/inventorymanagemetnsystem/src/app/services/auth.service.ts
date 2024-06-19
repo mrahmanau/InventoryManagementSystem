@@ -5,6 +5,8 @@ import { HttpClient } from '@angular/common/http';
 import { UserRegistrationDTO } from '../models/UserRegistrationDTO';
 import { UserLoginDTO } from '../models/UserLoginDTO';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { TwoFactorDTO } from '../models/TwoFactorDTO';
+import { LoginOutputDTO } from '../models/LoginOutputDTO';
 
 @Injectable({
   providedIn: 'root',
@@ -46,6 +48,16 @@ export class AuthService {
   isTokenExpired(): boolean {
     const token = this.getToken();
     return token ? this.jwtHelper.isTokenExpired(token) : true;
+  }
+
+  // Get user ID from token
+  getUserId(): number | null {
+    const token = this.getToken();
+    if (token) {
+      const decodedToken = this.jwtHelper.decodeToken(token);
+      return decodedToken?.sub ? +decodedToken.sub : null;
+    }
+    return null;
   }
 
   // Get user role
@@ -103,5 +115,21 @@ export class AuthService {
       params: { token },
       responseType: 'text',
     });
+  }
+
+  verifyTwoFactorCode(twoFactorData: TwoFactorDTO): Observable<LoginOutputDTO> {
+    return this.http.post<LoginOutputDTO>(
+      `${API_URL}/Auth/verify-2fa`,
+      twoFactorData
+    );
+  }
+
+  uploadProfileImage(file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.post<any>(
+      `${API_URL}/Auth/upload-profile-image`,
+      formData
+    );
   }
 }

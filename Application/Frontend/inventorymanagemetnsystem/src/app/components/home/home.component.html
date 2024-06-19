@@ -1,13 +1,18 @@
 <div class="container mt-5">
-  <!-- Jumbotron -->
-  <div class="jumbotron text-center bg-light p-5 mt-5">
-    <h1 class="display-4">Welcome to the Inventory Management System</h1>
-    <p class="lead">
+  <!-- Hero Section -->
+  <div class="hero text-center p-5 mt-5">
+    <h1 class="display-4 animate-text">
+      Welcome to the Inventory Management System
+    </h1>
+    <p class="lead animate-text">
       Efficiently manage your inventory with our comprehensive system.
     </p>
-    <hr class="my-4" />
-    <p>Explore the features and get started today!</p>
-    <a class="btn btn-primary btn-lg" href="/register" role="button"
+    <hr class="my-4 animate-text" />
+    <p class="animate-text">Explore the features and get started today!</p>
+    <a
+      class="btn btn-primary btn-lg animate-text"
+      href="/register"
+      role="button"
       >Get Started</a
     >
   </div>
@@ -17,7 +22,7 @@
     <div class="col-md-4">
       <div class="card">
         <img
-          src="https://source.unsplash.com/400x300/?inventory,storage"
+          src="assets/images/image-1.jpg"
           class="card-img-top"
           alt="Manage Inventory"
         />
@@ -27,14 +32,21 @@
             Keep track of your stock levels, add new items, and manage existing
             ones.
           </p>
-          <a href="/login" class="btn btn-primary">Login to Manage</a>
+          <button class="btn btn-primary" (click)="showDetails('inventory')">
+            Learn More
+          </button>
+          <p *ngIf="selectedFeature === 'inventory'" class="mt-3">
+            Our inventory management feature allows you to keep track of stock
+            levels, add new items, and manage existing products efficiently and
+            effectively.
+          </p>
         </div>
       </div>
     </div>
     <div class="col-md-4">
       <div class="card">
         <img
-          src="https://source.unsplash.com/400x300/?reports,charts"
+          src="assets/images/image-2.jpg"
           class="card-img-top"
           alt="View Reports"
         />
@@ -43,14 +55,20 @@
           <p class="card-text">
             Generate detailed reports on inventory status and performance.
           </p>
-          <a href="/login" class="btn btn-primary">Login to View</a>
+          <button class="btn btn-primary" (click)="showDetails('reports')">
+            Learn More
+          </button>
+          <p *ngIf="selectedFeature === 'reports'" class="mt-3">
+            Our reporting feature provides detailed insights into your inventory
+            status and performance, helping you make informed decisions.
+          </p>
         </div>
       </div>
     </div>
     <div class="col-md-4">
       <div class="card">
         <img
-          src="https://source.unsplash.com/400x300/?settings,profile"
+          src="assets/images/image-3.jpg"
           class="card-img-top"
           alt="Settings"
         />
@@ -59,7 +77,54 @@
           <p class="card-text">
             Update your profile, change settings, and manage user accounts.
           </p>
-          <a href="/login" class="btn btn-primary">Login to Manage</a>
+          <button class="btn btn-primary" (click)="showDetails('settings')">
+            Learn More
+          </button>
+          <p *ngIf="selectedFeature === 'settings'" class="mt-3">
+            Manage your account settings, update your profile, and handle user
+            accounts with ease using our comprehensive settings feature.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Testimonials Section -->
+  <div class="testimonials text-center my-5">
+    <h2>Testimonials</h2>
+    <p class="lead">What our clients say about us</p>
+    <div class="row mt-4">
+      <div class="col-md-4">
+        <div class="testimonial">
+          <img
+            src="assets/images/client-1.jpg"
+            class="img-fluid mb-3 rounded-circle"
+            alt="Client 1"
+          />
+          <p>"This inventory system has transformed our operations."</p>
+          <p><strong>- Bruce Mars</strong></p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="testimonial">
+          <img
+            src="assets/images/client-2.jpg"
+            class="img-fluid mb-3 rounded-circle"
+            alt="Client 2"
+          />
+          <p>"A fantastic tool for managing our inventory effectively."</p>
+          <p><strong>- Jeremy McGilvrey</strong></p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="testimonial">
+          <img
+            src="assets/images/client-3.jpg"
+            class="img-fluid mb-3 rounded-circle"
+            alt="Client 3"
+          />
+          <p>"Highly recommend this system for any business."</p>
+          <p><strong>- Christina</strong></p>
         </div>
       </div>
     </div>

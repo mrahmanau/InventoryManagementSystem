@@ -1,0 +1,26 @@
+.card {
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  background-color: #007bff;
+  color: white;
+  border-bottom: none;
+  border-radius: 10px 10px 0 0;
+}
+
+.card-title {
+  margin-bottom: 0;
+}
+
+.img-fluid {
+  border-radius: 10px;
+  height: 100%;
+  object-fit: cover;
+}
+
+.container {
+  padding: 50px 0;
+}

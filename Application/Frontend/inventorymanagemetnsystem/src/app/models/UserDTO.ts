@@ -6,6 +6,7 @@ export interface UserDTO {
   email: string;
   roleId: number;
   roleName: string;
+  profileImagePath: string;
   lastAction: string;
   totalLogs: number;
   lastActivity: Date;

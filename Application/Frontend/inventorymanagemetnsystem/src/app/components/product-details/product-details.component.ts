@@ -3,6 +3,7 @@ import { ProductDTO } from '../../models/ProductDTO';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../services/product.service';
 import { CommonModule } from '@angular/common';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-product-details',
@@ -17,7 +18,8 @@ export class ProductDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private productService: ProductService
+    private productService: ProductService,
+    private cartService: CartService
   ) {}
 
   ngOnInit(): void {
@@ -35,5 +37,12 @@ export class ProductDetailsComponent implements OnInit {
 
   goBack(): void {
     this.router.navigate(['/products-list']);
+  }
+
+  addToCart(): void {
+    if (this.product) {
+      this.cartService.addToCart(this.product);
+      this.router.navigate(['/cart']);
+    }
   }
 }

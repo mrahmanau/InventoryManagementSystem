@@ -11,6 +11,10 @@ import { ProductsListComponent } from './components/products-list/products-list.
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { ProductUpdateComponent } from './components/product-update/product-update.component';
 import { EmailConfirmationComponent } from './components/auth/email-confirmation/email-confirmation.component';
+import { TwoFactorAuthenticationComponent } from './components/auth/two-factor-authentication/two-factor-authentication.component';
+import { PaymentComponent } from './components/payment/payment.component';
+import { CartComponent } from './components/cart/cart.component';
+import { ContactComponent } from './components/contact/contact.component';
 
 export const routes: Routes = [
   {
@@ -26,6 +30,11 @@ export const routes: Routes = [
     component: LoginComponent,
   },
   { path: 'confirm-email', component: EmailConfirmationComponent },
+  {
+    path: '2fa',
+    component: TwoFactorAuthenticationComponent,
+  },
+  { path: 'payment', component: PaymentComponent },
   {
     path: 'dashboard',
     component: DashboardComponent,
@@ -59,5 +68,14 @@ export const routes: Routes = [
     component: ProductUpdateComponent,
     canActivate: [AuthGuard, RoleGuard],
     data: { expectedRole: 'Admin' },
+  },
+  {
+    path: 'cart',
+    component: CartComponent,
+  },
+
+  {
+    path: 'contact',
+    component: ContactComponent,
   },
 ];

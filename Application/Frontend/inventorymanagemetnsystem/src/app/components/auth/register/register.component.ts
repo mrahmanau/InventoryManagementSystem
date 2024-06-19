@@ -20,6 +20,8 @@ export class RegisterComponent {
   registerForm: FormGroup;
   successMessage: string | null = null;
   errorMessage: string | null = null;
+  profileImage: File | null = null;
+  isLoading: boolean = false;
 
   constructor(private fb: FormBuilder, private authService: AuthService) {
     this.registerForm = this.fb.group({
@@ -32,19 +34,49 @@ export class RegisterComponent {
     });
   }
 
+  onFileChange(event: any) {
+    if (event.target.files && event.target.files.length > 0) {
+      this.profileImage = event.target.files[0];
+    }
+  }
+
   onSubmit() {
     this.clearMessages();
     if (this.registerForm.valid) {
-      this.authService.register(this.registerForm.value).subscribe({
-        next: (res) => {
-          this.successMessage = 'User registered successfully.';
-          this.registerForm.reset();
-        },
-        error: (err) => {
-          this.errorMessage = 'Error: ' + err.error.message;
-        },
-      });
+      this.isLoading = true;
+      if (this.profileImage) {
+        this.authService.uploadProfileImage(this.profileImage).subscribe({
+          next: (response) => {
+            const imagePath = response.filePath;
+            const user = {
+              ...this.registerForm.value,
+              profileImagePath: imagePath,
+            };
+            this.registerUser(user);
+          },
+          error: (err) => {
+            this.errorMessage = 'Error uploading image: ' + err.error.message;
+            this.isLoading = false;
+          },
+        });
+      } else {
+        this.registerUser(this.registerForm.value);
+      }
     }
+  }
+
+  registerUser(user: any) {
+    this.authService.register(user).subscribe({
+      next: (res) => {
+        this.successMessage = 'User registered successfully.';
+        this.registerForm.reset();
+        this.isLoading = false;
+      },
+      error: (err) => {
+        this.errorMessage = 'Error: ' + err.error.message;
+        this.isLoading = false;
+      },
+    });
   }
 
   clearMessages(): void {

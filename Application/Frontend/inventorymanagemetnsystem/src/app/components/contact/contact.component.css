@@ -1,0 +1,24 @@
+.container {
+  margin-top: 100px;
+}
+
+.card {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  background-color: #007bff;
+  color: white;
+}
+
+.card-title {
+  margin: 0;
+}
+
+.form-group .form-control {
+  border-radius: 0;
+}
+
+.form-group .text-danger {
+  font-size: 0.875em;
+}
