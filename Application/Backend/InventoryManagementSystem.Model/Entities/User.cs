@@ -19,6 +19,8 @@ namespace InventoryManagementSystem.Model
         public Role Role { get; set; }  // Navigation property to Role entity
         public bool EmailConfirmed { get; set; } 
         public string EmailConfirmationToken { get; set; }
-
+        public string TwoFactorCode { get; set; } 
+        public DateTime? TwoFactorCodeExpiration { get; set; } 
+        public string ProfileImagePath { get; set; }
     }
 }

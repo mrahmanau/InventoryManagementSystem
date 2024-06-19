@@ -53,6 +53,7 @@ namespace InventoryManagementSystem.Service
                     Email = user.Email,
                     RoleId = user.RoleId,
                     RoleName = user.RoleName,
+                    ProfileImagePath = user.ProfileImagePath,
                     TotalLogs = user.TotalLogs,
                     LastActivity = user.LastActivity,
                     LastAction = user.LastAction,

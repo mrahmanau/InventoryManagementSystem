@@ -19,5 +19,9 @@ namespace InventoryManagementSystem.Model
         public string LastAction {  get; set; }
         public int TotalLogs { get; set; }
         public DateTime? LastActivity { get; set; }
+
+        public string TwoFactorCode { get; set; } 
+        public DateTime? TwoFactorCodeExpiration { get; set; }
+        public string ProfileImagePath { get; set; }
     }
 }

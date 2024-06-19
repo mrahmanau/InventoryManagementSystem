@@ -12,5 +12,9 @@ namespace InventoryManagementSystem.Service
         Task<RegisterResultDTO> RegisterAsync(UserRegistrationDTO userRegistrationDto);
         Task<User> LoginAsync(LoginDTO loginDTO);
         Task<string> ConfirmEmailAsync(string token);
+        Task<UserDTO> VerifyTwoFactorCodeAsync(TwoFactorDTO twoFactorDTO);
+        User MapUserDTOToUser(UserDTO userDto);
+        UserDTO MapUserToUserDTO(User user);
+
     }
 }

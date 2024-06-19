@@ -1,11 +1,58 @@
 {
   "Version": 1,
-  "Hash": "4njk1j2dbydQ2+ijWxSUcpLfqJ8hfZYMHWTDQtJV8KU=",
+  "Hash": "HdWS3svT3B/+mo/pvNFB6GGnqpHkoL0HhJtFvO2+u9U=",
   "Source": "InventoryManagementSystem",
   "BasePath": "_content/InventoryManagementSystem",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
+  "DiscoveryPatterns": [
+    {
+      "Name": "InventoryManagementSystem\\wwwroot",
+      "Source": "InventoryManagementSystem",
+      "ContentRoot": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem\\wwwroot\\",
+      "BasePath": "_content/InventoryManagementSystem",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem\\wwwroot\\images\\profiles\\87510a9e-a2b7-4942-b41e-e1151ab647db_client-2.jpg",
+      "SourceId": "InventoryManagementSystem",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem\\wwwroot\\",
+      "BasePath": "_content/InventoryManagementSystem",
+      "RelativePath": "images/profiles/87510a9e-a2b7-4942-b41e-e1151ab647db_client-2.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\profiles\\87510a9e-a2b7-4942-b41e-e1151ab647db_client-2.jpg"
+    },
+    {
+      "Identity": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem\\wwwroot\\images\\profiles\\f34d0e2e-8c25-421f-af9b-b4e6c76ffae4_Mahfuzur_Photo.jpg",
+      "SourceId": "InventoryManagementSystem",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem\\wwwroot\\",
+      "BasePath": "_content/InventoryManagementSystem",
+      "RelativePath": "images/profiles/f34d0e2e-8c25-421f-af9b-b4e6c76ffae4_Mahfuzur_Photo.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\profiles\\f34d0e2e-8c25-421f-af9b-b4e6c76ffae4_Mahfuzur_Photo.jpg"
+    }
+  ]
 }

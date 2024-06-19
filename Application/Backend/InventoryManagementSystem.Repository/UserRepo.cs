@@ -66,7 +66,9 @@ namespace InventoryManagementSystem.Repository
                 new Parm("@HashedPassword", SqlDbType.NVarChar, user.HashedPassword, 200),
                 new Parm("@RoleId", SqlDbType.Int, user.RoleId),
                 new Parm("@EmailConfirmed", SqlDbType.Bit, user.EmailConfirmed),
-                new Parm("@EmailConfirmationToken", SqlDbType.NVarChar, user.EmailConfirmationToken, 200)
+                new Parm("@EmailConfirmationToken", SqlDbType.NVarChar, user.EmailConfirmationToken, 200),
+                new Parm("@ProfileImagePath", SqlDbType.NVarChar, user.ProfileImagePath, 200)
+
             };
 
             var userId = await _db.ExecuteScalarAsync<int>("spAddUser", parms);
@@ -96,7 +98,8 @@ namespace InventoryManagementSystem.Repository
                 Email = row["Email"].ToString(),
                 HashedPassword = row["HashedPassword"].ToString(),
                 RoleId = (int)row["RoleId"],
-                EmailConfirmed = (bool)row["EmailConfirmed"],
+                EmailConfirmed = row["EmailConfirmed"] != DBNull.Value && (bool)row["EmailConfirmed"],
+
                 Role = new Role
                 {
                     RoleId = (int)row["RoleId"],
@@ -104,6 +107,36 @@ namespace InventoryManagementSystem.Repository
                 }
             };
         }
+
+        public async Task UpdateTwoFactorCodeAsync(UserDTO user)
+        {
+            // Log the parameter values
+            Console.WriteLine($"UserId: {user.UserId}");
+            Console.WriteLine($"TwoFactorCode: {user.TwoFactorCode}");
+            Console.WriteLine($"TwoFactorCodeExpiration: {user.TwoFactorCodeExpiration}");
+
+            var parms = new List<Parm>
+            {
+                new Parm("@UserId", SqlDbType.Int, user.UserId),
+                new Parm("@TwoFactorCode", SqlDbType.NVarChar, user.TwoFactorCode, 6),
+                new Parm("@TwoFactorCodeExpiration", SqlDbType.DateTime, user.TwoFactorCodeExpiration)
+            };
+
+            await _db.ExecuteNonQueryAsync("spUpdateTwoFactorCode", parms);
+        }
+
+        public async Task ClearTwoFactorCodeAsync(int userId)
+        {
+            var parms = new List<Parm>
+            {
+                new Parm("@UserId", SqlDbType.Int, userId),
+                new Parm("@TwoFactorCode", SqlDbType.NVarChar, DBNull.Value, 6),
+                new Parm("@TwoFactorCodeExpiration", SqlDbType.DateTime, DBNull.Value)
+            };
+
+            await _db.ExecuteNonQueryAsync("spUpdateTwoFactorCode", parms);
+        }
+
 
         public async Task<UserDTO> GetUserByIdAsync(int userId)
         {
@@ -128,25 +161,13 @@ namespace InventoryManagementSystem.Repository
                 Email = row["Email"].ToString(),
                 RoleId = (int)row["RoleId"],
                 RoleName = row["RoleName"].ToString(),
+                ProfileImagePath = row["ProfileImagePath"].ToString(),
                 TotalLogs = (int)row["TotalLogs"],
                 LastActivity = row["LastActivity"] == DBNull.Value ? (DateTime?)null : (DateTime)row["LastActivity"],
-                LastAction = row["LastAction"].ToString()
+                LastAction = row["LastAction"].ToString(),
+                TwoFactorCode = row["TwoFactorCode"].ToString(), 
+                TwoFactorCodeExpiration = row["TwoFactorCodeExpiration"] == DBNull.Value ? (DateTime?)null : (DateTime)row["TwoFactorCodeExpiration"] 
             };
-            //return new User
-            //{
-            //    UserId = (int)row["UserId"],
-            //    FirstName = row["FirstName"].ToString(),
-            //    LastName = row["LastName"].ToString(),
-            //    Username = row["Username"].ToString(),
-            //    Email = row["Email"].ToString(),
-            //    HashedPassword = row["HashedPassword"].ToString(),
-            //    RoleId = (int)row["RoleId"],
-            //    Role = new Role
-            //    {
-            //        RoleId = (int)row["RoleId"],
-            //        RoleName = row["RoleName"].ToString()
-            //    }
-            //};
         }
 
         public async Task<IEnumerable<User>> GetUsersAsync()

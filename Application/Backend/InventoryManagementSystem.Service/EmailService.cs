@@ -51,5 +51,32 @@ namespace InventoryManagementSystem.Service
                 throw;
             }
         }
+
+        public async Task SendTwoFactorCodeAsync(string email, string twoFactorCode)
+        {
+            var client = new SendGridClient(_sendGridApiKey);
+            var from = new EmailAddress("admin@mahfuzurr.com", "Inventory Management System");
+            var subject = "Your Two-Factor Authentication Code";
+            var to = new EmailAddress (email);
+            var plainTextContent = $"Your two-factor authentication code is: {twoFactorCode}";
+            var htmlContent = $"<p>Your two-factor authentication code is: <strong>{twoFactorCode}</strong></p>";
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+            try
+            {
+                var response = await client.SendEmailAsync(msg);
+                _logger.LogInformation("Email sent. Status code: {StatusCode}", response.StatusCode);
+
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    string responseBody = await response.Body.ReadAsStringAsync();
+                    _logger.LogError("SendGrid response error: {ResponseBody}", responseBody);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error sending email");
+                throw;
+            }
+        }
     }
 }

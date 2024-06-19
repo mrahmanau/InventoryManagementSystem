@@ -1,6 +1,7 @@
 
 using DAL;
 using InventoryManagementSystem.Interfaces;
+using InventoryManagementSystem.Model;
 using InventoryManagementSystem.Repository;
 using InventoryManagementSystem.Service;
 using InventoryManagementSystem.Services;
@@ -42,6 +43,20 @@ namespace InventoryManagementSystem
                 var logger = provider.GetRequiredService<ILogger<EmailService>>();
                 return new EmailService(sendGridApiKey, baseUrl, logger);
             });
+
+            // Register ContactService and ContactRepository
+            builder.Services.AddScoped<IContactService, ContactService>();
+            builder.Services.AddScoped<IContactRepository, ContactRepository>();
+
+            builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
+
+            // Register PaymentService and PaymentRepository
+            builder.Services.AddScoped<IPaymentService, PaymentService>();
+            builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+
+            // Register ImageService
+            builder.Services.AddScoped<IImageService, ImageService>();
+
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();

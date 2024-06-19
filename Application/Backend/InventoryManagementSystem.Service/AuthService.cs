@@ -30,13 +30,10 @@ namespace InventoryManagementSystem.Service
         {
             try
             {
-                // Validate the user registration DTO
                 var validationErrors = ValidateUserRegistration(userRegistrationDTO);
 
                 if (validationErrors.Any())
                 {
-                    // If there are validation errors, return the errors as a string
-                    //return string.Join(", ", validationErrors.Select(error => error.Description));
                    throw new ValidationException(string.Join(", ", validationErrors.Select(error => error.Description)));
                 }
 
@@ -59,7 +56,8 @@ namespace InventoryManagementSystem.Service
                     HashedPassword = HashPassword(userRegistrationDTO.Password),
                     RoleId = userRegistrationDTO.RoleId,
                     EmailConfirmed = false,
-                    EmailConfirmationToken = GenerateEmailConfirmationToken()
+                    EmailConfirmationToken = GenerateEmailConfirmationToken(),
+                    ProfileImagePath = userRegistrationDTO.ProfileImagePath,
                 };
 
                 // Add user to the repository and get the new user's ID
@@ -128,6 +126,44 @@ namespace InventoryManagementSystem.Service
                 throw new Exception("Email not confirmed. Please check your email for a confirmation link.");
             }
 
+            // Generate 2FA code
+            var twoFactorCode = GenerateTwoFactorCode();
+            user.TwoFactorCode = twoFactorCode;
+            user.TwoFactorCodeExpiration = DateTime.UtcNow.AddMinutes(30);
+
+            // Convert User to UserDTO
+            var userDto = MapUserToUserDTO(user);
+
+            // Save 2FA code to the database
+            await _repo.UpdateTwoFactorCodeAsync(userDto);
+
+            // Send 2FA code to user's email
+            await _emailService.SendTwoFactorCodeAsync(user.Email, twoFactorCode);
+
+            return user;
+        }
+
+        public async Task<UserDTO> VerifyTwoFactorCodeAsync(TwoFactorDTO twoFactorDto)
+        {
+            var user = await _repo.GetUserByIdAsync(twoFactorDto.UserId);
+
+            if (user == null)
+            {
+                throw new Exception("Invalid or expired 2FA code.");
+            }
+
+            // Log the retrieved values
+            Console.WriteLine($"Retrieved TwoFactorCode: {user.TwoFactorCode}");
+            Console.WriteLine($"Provided TwoFactorCode: {twoFactorDto.TwoFactorCode}");
+            Console.WriteLine($"TwoFactorCodeExpiration: {user.TwoFactorCodeExpiration}");
+            Console.WriteLine($"Current UTC Time: {DateTime.UtcNow}");
+
+            if (user.TwoFactorCode != twoFactorDto.TwoFactorCode || user.TwoFactorCodeExpiration < DateTime.UtcNow)
+            {
+                throw new Exception("Invalid or expired 2FA code.");
+            }
+            await _repo.ClearTwoFactorCodeAsync(user.UserId);
+
             return user;
         }
 
@@ -166,6 +202,49 @@ namespace InventoryManagementSystem.Service
                 return Convert.ToBase64String(tokenData);
             }
         }
+
+        private string GenerateTwoFactorCode()
+        {
+            var random = new Random();
+            return random.Next(100000, 999999).ToString();
+        }
+
+        public User MapUserDTOToUser(UserDTO userDto)
+        {
+            return new User
+            {
+                UserId = userDto.UserId,
+                FirstName = userDto.FirstName,
+                LastName = userDto.LastName,
+                Username = userDto.UserName,
+                Email = userDto.Email,
+                RoleId = userDto.RoleId,
+                TwoFactorCode = userDto.TwoFactorCode,
+                TwoFactorCodeExpiration = userDto.TwoFactorCodeExpiration,
+                Role = new Role
+                {
+                    RoleId = userDto.RoleId,
+                    RoleName = userDto.RoleName
+                }
+            };
+        }
+
+        public UserDTO MapUserToUserDTO(User user)
+        {
+            return new UserDTO
+            {
+                UserId = user.UserId,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                UserName = user.Username,
+                Email = user.Email,
+                RoleId = user.RoleId,
+                RoleName = user.Role?.RoleName,
+                TwoFactorCode = user.TwoFactorCode,
+                TwoFactorCodeExpiration = user.TwoFactorCodeExpiration
+            };
+        }
+
 
         private List<ValidationError> ValidateUserRegistration(UserRegistrationDTO userRegistrationDTO)
         {

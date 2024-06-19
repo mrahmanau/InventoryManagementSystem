@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "8V2QvexrklfDEZXlQ62Nh1mML26WJ6LJHSJKOXJw0HGODzQ4AVIOsRBkup5uQ93fnOW1oaSVakA56em1vG5Vew==",
+  "dgSpecHash": "aFyhNcYMoYCqDI5YMjm+KRRyLQDz8d0bZ3ChZlAq+EktnF+zcwARREeenYcQnh8P8rKWOPeGjnl3Yrh21kyqAQ==",
   "success": true,
   "projectFilePath": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem.Repository\\InventoryManagementSystem.Repository.csproj",
   "expectedPackageFiles": [
@@ -31,6 +31,7 @@
     "C:\\Users\\mrahm\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Users\\mrahm\\.nuget\\packages\\sendgrid\\9.29.3\\sendgrid.9.29.3.nupkg.sha512",
     "C:\\Users\\mrahm\\.nuget\\packages\\starkbank-ecdsa\\1.3.3\\starkbank-ecdsa.1.3.3.nupkg.sha512",
+    "C:\\Users\\mrahm\\.nuget\\packages\\stripe.net\\44.12.0\\stripe.net.44.12.0.nupkg.sha512",
     "C:\\Users\\mrahm\\.nuget\\packages\\system.configuration.configurationmanager\\8.0.0\\system.configuration.configurationmanager.8.0.0.nupkg.sha512",
     "C:\\Users\\mrahm\\.nuget\\packages\\system.diagnostics.diagnosticsource\\6.0.1\\system.diagnostics.diagnosticsource.6.0.1.nupkg.sha512",
     "C:\\Users\\mrahm\\.nuget\\packages\\system.diagnostics.eventlog\\8.0.0\\system.diagnostics.eventlog.8.0.0.nupkg.sha512",

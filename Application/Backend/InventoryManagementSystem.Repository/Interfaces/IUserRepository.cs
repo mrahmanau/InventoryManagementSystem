@@ -18,6 +18,8 @@ namespace InventoryManagementSystem.Repository
         Task UpdateUserAsync(UserDTO user);
         Task AddLogAsync(UserActivityLogDTO log);
         Task<User> GetUserByTokenAsync(string token);
-        Task UpdateEmailConfirmationStatusAsync(User user); 
+        Task UpdateEmailConfirmationStatusAsync(User user);
+        Task UpdateTwoFactorCodeAsync(UserDTO user);
+        Task ClearTwoFactorCodeAsync(int userId);
     }
 }

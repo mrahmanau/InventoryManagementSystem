@@ -12,7 +12,8 @@
           "InventoryManagementSystem.Model": "1.0.0",
           "InventoryManagementSystem.Types": "1.0.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "8.0.6",
-          "SendGrid": "9.29.3"
+          "SendGrid": "9.29.3",
+          "Stripe.net": "44.12.0"
         },
         "runtime": {
           "InventoryManagementSystem.Repository.dll": {}
@@ -328,6 +329,18 @@
           }
         }
       },
+      "Stripe.net/44.12.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.1",
+          "System.Configuration.ConfigurationManager": "8.0.0"
+        },
+        "runtime": {
+          "lib/net6.0/Stripe.net.dll": {
+            "assemblyVersion": "44.12.0.0",
+            "fileVersion": "44.12.0.0"
+          }
+        }
+      },
       "System.Configuration.ConfigurationManager/8.0.0": {
         "dependencies": {
           "System.Diagnostics.EventLog": "8.0.0",
@@ -426,7 +439,8 @@
           "Microsoft.AspNetCore.Authentication.JwtBearer": "8.0.6",
           "Microsoft.Data.SqlClient": "5.2.0",
           "Microsoft.Extensions.Configuration.Json": "8.0.0",
-          "SendGrid": "9.29.3"
+          "SendGrid": "9.29.3",
+          "Stripe.net": "44.12.0"
         },
         "runtime": {
           "DAL.dll": {}
@@ -436,7 +450,8 @@
         "dependencies": {
           "InventoryManagementSystem.Types": "1.0.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "8.0.6",
-          "SendGrid": "9.29.3"
+          "SendGrid": "9.29.3",
+          "Stripe.net": "44.12.0"
         },
         "runtime": {
           "InventoryManagementSystem.Model.dll": {}
@@ -445,7 +460,8 @@
       "InventoryManagementSystem.Types/1.0.0": {
         "dependencies": {
           "Microsoft.AspNetCore.Authentication.JwtBearer": "8.0.6",
-          "SendGrid": "9.29.3"
+          "SendGrid": "9.29.3",
+          "Stripe.net": "44.12.0"
         },
         "runtime": {
           "InventoryManagementSystem.Types.dll": {}
@@ -647,6 +663,13 @@
       "sha512": "sha512-OblOaKb1enXn+dSp7tsx9yjwV+/BEKM9jFhshIkZTwCk7LuTFTp+wSon6rFzuPiIiTGtvVWQNUw2slHjGktJog==",
       "path": "starkbank-ecdsa/1.3.3",
       "hashPath": "starkbank-ecdsa.1.3.3.nupkg.sha512"
+    },
+    "Stripe.net/44.12.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-DuyRipXRICPYPSUhcn+3kiUhKICRxzy5tr3ZzvhRRGAoOsBvMhqcE/Y0pRZQQR+Owh9B4lkjECFQEJB1U6xENw==",
+      "path": "stripe.net/44.12.0",
+      "hashPath": "stripe.net.44.12.0.nupkg.sha512"
     },
     "System.Configuration.ConfigurationManager/8.0.0": {
       "type": "package",

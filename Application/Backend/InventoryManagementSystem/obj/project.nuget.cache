@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "fm5BF27AtK1g35UoaMOr4MJYb7GDfR1j+7UUG0WgDU+EYUh/ARetmsSZfKpwWzx6vHeKLzA4UwzzqSk2H8j6xQ==",
+  "dgSpecHash": "jAyM5+WMp3nZLhuE1D2QcBgkJh5CM6KcNzHBQSuHjGvpXn3alP2OdYG4tLVaGR57VSJWeopDUMVG0HEVM47joA==",
   "success": true,
   "projectFilePath": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem\\InventoryManagementSystem.csproj",
   "expectedPackageFiles": [
@@ -33,6 +33,7 @@
     "C:\\Users\\mrahm\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Users\\mrahm\\.nuget\\packages\\sendgrid\\9.29.3\\sendgrid.9.29.3.nupkg.sha512",
     "C:\\Users\\mrahm\\.nuget\\packages\\starkbank-ecdsa\\1.3.3\\starkbank-ecdsa.1.3.3.nupkg.sha512",
+    "C:\\Users\\mrahm\\.nuget\\packages\\stripe.net\\44.12.0\\stripe.net.44.12.0.nupkg.sha512",
     "C:\\Users\\mrahm\\.nuget\\packages\\swashbuckle.aspnetcore\\6.4.0\\swashbuckle.aspnetcore.6.4.0.nupkg.sha512",
     "C:\\Users\\mrahm\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.4.0\\swashbuckle.aspnetcore.swagger.6.4.0.nupkg.sha512",
     "C:\\Users\\mrahm\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.4.0\\swashbuckle.aspnetcore.swaggergen.6.4.0.nupkg.sha512",

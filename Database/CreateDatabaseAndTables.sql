@@ -40,8 +40,11 @@ CREATE TABLE Users (
     Email NVARCHAR(100) NOT NULL,
     HashedPassword NVARCHAR(200) NOT NULL,
     RoleId INT NOT NULL,
+	ProfileImagePath NVARCHAR(200),
 	EmailConfirmed BIT DEFAULT 0,
     EmailConfirmationToken NVARCHAR(200) NULL, 
+	TwoFactorCode NVARCHAR(6) NULL,
+    TwoFactorCodeExpiration DATETIME NULL,
 	Version ROWVERSION,
     FOREIGN KEY (RoleId) REFERENCES Roles(RoleId)
 );
@@ -79,9 +82,37 @@ CREATE TABLE UserActivityLog (
     Action NVARCHAR(255) NOT NULL,
     Timestamp DATETIME NOT NULL,
     Details NVARCHAR(255),
+    FOREIGN KEY (UserId) REFERENCES Users(UserId) ON DELETE CASCADE
+);
+
+-- Create the Payments table
+IF OBJECT_ID('Payments', 'U') IS NOT NULL
+DROP TABLE Payments
+
+CREATE TABLE Payments (
+    PaymentId INT PRIMARY KEY IDENTITY(1,1),
+    UserId INT NOT NULL,
+    PaymentIntentId NVARCHAR(50) NOT NULL,
+    Amount BIGINT NOT NULL,
+    Currency NVARCHAR(10) NOT NULL,
+    Status NVARCHAR(20) NOT NULL,
+    CreatedAt DATETIME NOT NULL DEFAULT GETDATE(),
     FOREIGN KEY (UserId) REFERENCES Users(UserId)
 );
 
+
+-- Create the Contacts table
+IF OBJECT_ID('Contacts', 'U') IS NOT NULL
+DROP TABLE Contacts
+
+CREATE TABLE Contacts (
+    ContactId INT PRIMARY KEY IDENTITY(1,1),
+    Name NVARCHAR(100) NOT NULL,
+    Email NVARCHAR(100) NOT NULL,
+    Subject NVARCHAR(200) NOT NULL,
+    Message NVARCHAR(MAX) NOT NULL,
+    CreatedAt DATETIME DEFAULT GETDATE()
+);
 
 
 /*
@@ -163,11 +194,12 @@ CREATE OR ALTER PROCEDURE spAddUser
     @HashedPassword NVARCHAR(200),
     @RoleId INT,
 	@EmailConfirmed BIT,
-	@EmailConfirmationToken NVARCHAR(200)
+	@EmailConfirmationToken NVARCHAR(200),
+	@ProfileImagePath NVARCHAR(200)
 AS
 BEGIN
-    INSERT INTO Users (FirstName, LastName, Username, Email, HashedPassword, RoleId, EmailConfirmed, EmailConfirmationToken)
-    VALUES (@FirstName, @LastName, @Username, @Email, @HashedPassword, @RoleId, @EmailConfirmed, @EmailConfirmationToken);
+    INSERT INTO Users (FirstName, LastName, Username, Email, HashedPassword, RoleId, EmailConfirmed, EmailConfirmationToken, ProfileImagePath)
+    VALUES (@FirstName, @LastName, @Username, @Email, @HashedPassword, @RoleId, @EmailConfirmed, @EmailConfirmationToken, @ProfileImagePath);
 
 	SELECT SCOPE_IDENTITY() AS UserId;
 END;
@@ -196,23 +228,12 @@ BEGIN
 END;
 GO
 
--- Get user by id
---CREATE OR ALTER PROCEDURE spGetUserById
---    @UserId INT
---AS
---BEGIN
---    SELECT u.UserId, u.FirstName, u.LastName, u.Username, u.Email, u.HashedPassword, u.RoleId, r.RoleName
---    FROM Users u
---    INNER JOIN Roles r ON u.RoleId = r.RoleId
---    WHERE u.UserId = @UserId;
---END;
---GO
-
+-- Get user by Id
 CREATE OR ALTER PROCEDURE spGetUserById
     @UserId INT
 AS
 BEGIN
-    SELECT u.UserId, u.FirstName, u.LastName, u.Username, u.Email, u.HashedPassword, u.RoleId, r.RoleName,
+    SELECT u.UserId, u.FirstName, u.LastName, u.Username, u.Email, u.HashedPassword, u.RoleId, u.TwoFactorCode, u.TwoFactorCodeExpiration, u.ProfileImagePath, r.RoleName,
 	(SELECT COUNT(*) FROM UserActivityLog WHERE UserId = @UserId) AS TotalLogs,
 	(SELECT MAX(Timestamp) FROM UserActivityLog WHERE UserId = @UserId) AS LastActivity,
 	(SELECT TOP 1 Action FROM UserActivityLog WHERE UserId = @UserId ORDER BY Timestamp DESC) AS LastAction
@@ -274,6 +295,111 @@ BEGIN
 	VALUES(@UserId, @Action, @Timestamp, @Details)
 END
 GO
+
+-- Get user by token
+CREATE OR ALTER PROCEDURE spGetUserByToken
+    @Token NVARCHAR(200)
+AS
+BEGIN
+    SELECT 
+        Users.UserId,
+        Users.FirstName,
+        Users.LastName,
+        Users.Username,
+        Users.Email,
+        Users.HashedPassword,
+        Users.RoleId,
+        Users.EmailConfirmed,
+        Users.EmailConfirmationToken,
+		Roles.RoleName
+    FROM Users
+	JOIN Roles ON Users.RoleId = Roles.RoleId
+    WHERE Users.EmailConfirmationToken = @Token;
+END;
+GO
+
+-- Update Email Confirmation Status
+CREATE OR ALTER PROCEDURE spUpdateEmailConfirmationStatus
+    @UserId INT,
+    @EmailConfirmed BIT,
+    @EmailConfirmationToken NVARCHAR(200)
+AS
+BEGIN
+    UPDATE Users
+    SET EmailConfirmed = @EmailConfirmed,
+        EmailConfirmationToken = @EmailConfirmationToken
+    WHERE UserId = @UserId;
+END;
+GO
+
+--CREATE OR ALTER PROCEDURE spUpdateTwoFactorCode
+--    @UserId INT,
+--    @TwoFactorCode NVARCHAR(6),
+--    @TwoFactorCodeExpiration DATETIME
+--AS
+--BEGIN
+--    UPDATE Users
+--    SET TwoFactorCode = @TwoFactorCode,
+--        TwoFactorCodeExpiration = @TwoFactorCodeExpiration
+--    WHERE UserId = @UserId;
+--END;
+--GO
+
+CREATE OR ALTER PROCEDURE spUpdateTwoFactorCode
+    @UserId INT,
+    @TwoFactorCode NVARCHAR(6) = NULL,
+    @TwoFactorCodeExpiration DATETIME = NULL
+AS
+BEGIN
+    UPDATE Users
+    SET TwoFactorCode = @TwoFactorCode,
+        TwoFactorCodeExpiration = @TwoFactorCodeExpiration
+    WHERE UserId = @UserId;
+END;
+GO
+
+-- Add payment details
+CREATE OR ALTER PROCEDURE spAddPayment
+    @UserId INT,
+    @PaymentIntentId NVARCHAR(50),
+    @Amount BIGINT,
+    @Currency NVARCHAR(10),
+    @Status NVARCHAR(20),
+    @CreatedAt DATETIME
+AS
+BEGIN
+    INSERT INTO Payments (UserId, PaymentIntentId, Amount, Currency, Status, CreatedAt)
+    VALUES (@UserId, @PaymentIntentId, @Amount, @Currency, @Status, @CreatedAt);
+
+    SELECT CAST(SCOPE_IDENTITY() AS INT) AS PaymentId;
+END;
+GO
+
+-- Get paymentintentid 
+CREATE OR ALTER PROCEDURE spGetPaymentByIntentId
+    @PaymentIntentId NVARCHAR(50)
+AS
+BEGIN
+    SELECT *
+    FROM Payments
+    WHERE PaymentIntentId = @PaymentIntentId;
+END;
+GO
+
+
+-- Update payment status
+CREATE OR ALTER PROCEDURE spUpdatePayment
+    @PaymentIntentId NVARCHAR(50),
+    @Status NVARCHAR(20)
+AS
+BEGIN
+    UPDATE Payments
+    SET Status = @Status
+    WHERE PaymentIntentId = @PaymentIntentId;
+END;
+GO
+
+
 
 -- Add a product
 CREATE OR ALTER PROCEDURE spAddProduct
@@ -371,3 +497,19 @@ AS
 		ORDER BY CategoryName ASC;
 	END;
 GO
+
+-- Add contact messages
+CREATE OR ALTER PROCEDURE spAddContact
+    @Name NVARCHAR(100),
+    @Email NVARCHAR(100),
+    @Subject NVARCHAR(200),
+    @Message NVARCHAR(MAX)
+AS
+BEGIN
+    INSERT INTO Contacts (Name, Email, Subject, Message, CreatedAt)
+    VALUES (@Name, @Email, @Subject, @Message, GETDATE());
+
+    SELECT SCOPE_IDENTITY() AS ContactId;
+END;
+GO
+

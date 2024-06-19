@@ -15,12 +15,14 @@ namespace InventoryManagementSystem.Controllers
         private readonly IAuthService _authService;
         private readonly ITokenService _tokenService;
         private readonly IUserService _userService;
+        private readonly IImageService _imageService;
 
-        public AuthController(IAuthService authService, ITokenService tokenService, IUserService userService)
+        public AuthController(IAuthService authService, ITokenService tokenService, IUserService userService, IImageService imageService)
         {
             _authService = authService;
             _tokenService = tokenService;
             _userService = userService;
+            _imageService = imageService;
         }
 
         [HttpPost("register")]
@@ -80,6 +82,17 @@ namespace InventoryManagementSystem.Controllers
             try
             {
                 var user = await _authService.LoginAsync(loginDTO);
+
+                if(user.TwoFactorCode != null)
+                {
+                    return Ok(new LoginOutputDTO
+                    {
+                        UserId = user.UserId,
+                        RequiresTwoFactor = true,
+                        Message = "2FA code sent to your email."
+                    });
+                }
+
                 var token = _tokenService.GenerateJwtToken(user);
 
                 // Log the login action
@@ -97,7 +110,8 @@ namespace InventoryManagementSystem.Controllers
                 {
                     UserId = user.UserId,
                     Token = token,
-                    ExpiresIn = 7 * 24 * 60 * 60 // Token expiration time in seconds (7 days)
+                    ExpiresIn = 7 * 24 * 60 * 60,
+                    RequiresTwoFactor = false
                 };
             }
             catch(Exception ex)
@@ -105,5 +119,51 @@ namespace InventoryManagementSystem.Controllers
                 return Unauthorized(new {message = ex.Message});
             }
         }
+
+        [HttpPost("verify-2fa")]
+        public async Task<ActionResult<LoginOutputDTO>> VerifyTwoFactorCode([FromBody] TwoFactorDTO twoFactorDto)
+        {
+            try
+            {
+                var userDto = await _authService.VerifyTwoFactorCodeAsync(twoFactorDto);
+                var user = _authService.MapUserDTOToUser(userDto); // Ensure this method is public in AuthService
+                var token = _tokenService.GenerateJwtToken(user);
+
+                return new LoginOutputDTO
+                {
+                    UserId = user.UserId,
+                    Token = token,
+                    ExpiresIn = 7 * 24 * 60 * 60 // Token expiration time in seconds (7 days)
+                };
+            }
+            catch (Exception ex)
+            {
+                return Unauthorized(new { message = ex.Message });
+            }
+        }
+
+        [HttpPost("upload-profile-image")]
+        public async Task<IActionResult> UploadProfileImage(IFormFile file)
+        {
+            try
+            {
+                var filePath = await _imageService.UploadProfileImageAsync(file);
+                return Ok(new { filePath });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (ApplicationException ex)
+            {
+                return StatusCode(500, new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An unexpected error occurred. Please try again later." });
+            }
+        }
+
+
     }
 }

@@ -9,5 +9,6 @@ namespace InventoryManagementSystem.Service
     public interface IEmailService
     {
         Task SendEmailConfirmationAsync(string email, string token);
+        Task SendTwoFactorCodeAsync(string email, string twoFactorCode);
     }
 }

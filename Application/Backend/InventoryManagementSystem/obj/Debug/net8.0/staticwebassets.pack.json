@@ -1,0 +1,29 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem\\wwwroot\\images\\profiles\\87510a9e-a2b7-4942-b41e-e1151ab647db_client-2.jpg",
+      "PackagePath": "staticwebassets\\images\\profiles\\87510a9e-a2b7-4942-b41e-e1151ab647db_client-2.jpg"
+    },
+    {
+      "Id": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem\\wwwroot\\images\\profiles\\f34d0e2e-8c25-421f-af9b-b4e6c76ffae4_Mahfuzur_Photo.jpg",
+      "PackagePath": "staticwebassets\\images\\profiles\\f34d0e2e-8c25-421f-af9b-b4e6c76ffae4_Mahfuzur_Photo.jpg"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.InventoryManagementSystem.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.InventoryManagementSystem.props",
+      "PackagePath": "build\\InventoryManagementSystem.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.InventoryManagementSystem.props",
+      "PackagePath": "buildMultiTargeting\\InventoryManagementSystem.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.InventoryManagementSystem.props",
+      "PackagePath": "buildTransitive\\InventoryManagementSystem.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
