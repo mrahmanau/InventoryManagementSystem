@@ -1,2 +1,2 @@
-
-General Documents/~$cumentation.docx
+# Ignore appsettings.json
+**/appsettings.json
