@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{4870856F-C9E9-402F-AB05-94ED088CA02B}|InventoryManagementSystem\\InventoryManagementSystem.csproj|c:\\src\\portfolios\\inventorymanagementsystem\\application\\backend\\inventorymanagementsystem\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{4870856F-C9E9-402F-AB05-94ED088CA02B}|InventoryManagementSystem\\InventoryManagementSystem.csproj|solutionrelative:inventorymanagementsystem\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{4870856F-C9E9-402F-AB05-94ED088CA02B}|InventoryManagementSystem\\InventoryManagementSystem.csproj|c:\\src\\portfolios\\inventorymanagementsystem\\application\\backend\\inventorymanagementsystem\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4870856F-C9E9-402F-AB05-94ED088CA02B}|InventoryManagementSystem\\InventoryManagementSystem.csproj|solutionrelative:inventorymanagementsystem\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -31,6 +35,19 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem\\appsettings.json",
+              "RelativeDocumentMoniker": "InventoryManagementSystem\\appsettings.json",
+              "ToolTip": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem\\appsettings.json",
+              "RelativeToolTip": "InventoryManagementSystem\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAZAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-07-02T12:54:39.95Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "UsersController.cs",
               "DocumentMoniker": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem\\Controllers\\UsersController.cs",
               "RelativeDocumentMoniker": "InventoryManagementSystem\\Controllers\\UsersController.cs",
@@ -43,7 +60,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "AuthService.cs",
               "DocumentMoniker": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem.Service\\AuthService.cs",
               "RelativeDocumentMoniker": "InventoryManagementSystem.Service\\AuthService.cs",
@@ -55,7 +72,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "AuthController.cs",
               "DocumentMoniker": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem\\Controllers\\AuthController.cs",
               "RelativeDocumentMoniker": "InventoryManagementSystem\\Controllers\\AuthController.cs",
@@ -63,12 +80,11 @@
               "RelativeToolTip": "InventoryManagementSystem\\Controllers\\AuthController.cs",
               "ViewState": "AQIAAD0AAAAAAAAAAAAtwE0AAAAIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-27T01:23:23.828Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-27T01:23:23.828Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "EmailService.cs",
               "DocumentMoniker": "C:\\src\\portfolios\\InventoryManagementSystem\\Application\\Backend\\InventoryManagementSystem.Service\\EmailService.cs",
               "RelativeDocumentMoniker": "InventoryManagementSystem.Service\\EmailService.cs",
