@@ -3,6 +3,7 @@ using InventoryManagementSystem.Model;
 using InventoryManagementSystem.Service;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 using System.Net;
 using static InventoryManagementSystem.Service.AuthService;
 
@@ -43,7 +44,7 @@ namespace InventoryManagementSystem.Controllers
 
                 await _userService.AddLogAsync(log);
 
-                return Ok(new { message = result });
+                return Ok(result);
             }
             catch (UserAlreadyExistsException ex)
             {
@@ -163,6 +164,80 @@ namespace InventoryManagementSystem.Controllers
                 return StatusCode(500, new { message = "An unexpected error occurred. Please try again later." });
             }
         }
+
+        [HttpPost("update-password")]
+        public async Task<IActionResult> UpdatePassword([FromBody] EditPasswordDTO editPasswordDTO)
+        {
+            try
+            {
+                var result = await _authService.UpdatePasswordAsync(editPasswordDTO);
+
+                if (!result)
+                {
+                    return BadRequest(new { message = "Password update failed." });
+                }
+
+                return Ok(new { message = "Password updated successfully." });
+            }
+            catch (ValidationException ex)
+            {
+                return BadRequest(new { errors = ex.Message.Split('.').Where(m => !string.IsNullOrEmpty(m)).Select(m => m.Trim()).ToList() });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpPost("request-password-reset")]
+        public async Task<IActionResult> RequestPasswordReset([FromBody] ForgotPasswordDTO forgotPasswordDTO)
+        {
+            try
+            {
+                var result = await _authService.RequestPasswordResetAsync(forgotPasswordDTO.Email);
+
+                if (!result)
+                {
+                    return BadRequest(new { message = "Password reset request failed." });
+                }
+
+                return Ok(new { message = "You should soon receive an email allowing you to reset your password. Please make sure to check your spam and trash if you can't find the email." });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDTO resetPasswordDTO)
+        {
+            try
+            {
+                if (resetPasswordDTO.NewPassword != resetPasswordDTO.ConfirmPassword)
+                {
+                    return BadRequest(new { message = "Password and Confirm Password do not match." });
+                }
+
+                var result = await _authService.ResetPasswordAsync(resetPasswordDTO);
+
+                if (!result)
+                {
+                    return BadRequest(new { message = "Password reset failed." });
+                }
+
+                return Ok(new { message = "Password reset successfully." });
+            }
+            catch (ValidationException ex)
+            {
+                return BadRequest(new { errors = ex.Message.Split('.').Where(m => !string.IsNullOrEmpty(m)).Select(m => m.Trim()).ToList() });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
 
 
     }

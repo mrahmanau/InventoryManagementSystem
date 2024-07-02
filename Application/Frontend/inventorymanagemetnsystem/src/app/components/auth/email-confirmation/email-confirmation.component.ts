@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { CommonModule } from '@angular/common';
 
@@ -16,7 +16,8 @@ export class EmailConfirmationComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -27,6 +28,9 @@ export class EmailConfirmationComponent implements OnInit {
           (response) => {
             this.message = response;
             this.isSuccess = true;
+            setTimeout(() => {
+              this.router.navigate(['/login']);
+            }, 3000);
           },
           (error) => {
             this.message = error.error;

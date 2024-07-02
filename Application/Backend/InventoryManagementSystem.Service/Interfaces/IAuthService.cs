@@ -15,6 +15,10 @@ namespace InventoryManagementSystem.Service
         Task<UserDTO> VerifyTwoFactorCodeAsync(TwoFactorDTO twoFactorDTO);
         User MapUserDTOToUser(UserDTO userDto);
         UserDTO MapUserToUserDTO(User user);
+        Task<bool> UpdatePasswordAsync(EditPasswordDTO editPasswordDTO);
+        Task<bool> RequestPasswordResetAsync(string email);
+        Task<bool> ResetPasswordAsync(ResetPasswordDTO resetPasswordDTO);
+
 
     }
 }

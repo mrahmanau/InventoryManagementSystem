@@ -98,6 +98,17 @@ namespace InventoryManagementSystem.Service
             }
         }
 
+        public async Task<bool> UpdateUserProfileAsync(EditProfileDTO editProfileDto)
+        {
+            var existingUser = await _repo.GetUserByUsernameAsync(editProfileDto.Username);
+            if (existingUser != null && existingUser.UserId != editProfileDto.UserId)
+            {
+                throw new Exception("Username already exists.");
+            }
+
+            return await _repo.UpdateUserProfileAsync(editProfileDto);
+        }
+
         public async Task AddLogAsync(UserActivityLogDTO log)
         {
             try

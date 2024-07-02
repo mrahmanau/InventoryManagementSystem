@@ -1,3 +1,2 @@
-
 # Ignore appsettings.json
-**/appsettings.json
+Application/Backend/InventoryManagementSystem/appsettings.json

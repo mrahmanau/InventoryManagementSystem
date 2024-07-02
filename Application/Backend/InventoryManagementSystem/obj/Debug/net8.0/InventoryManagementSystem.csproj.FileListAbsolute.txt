@@ -25,7 +25,6 @@ C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagem
 C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.InventoryManagementSystem.props
 C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem\obj\Debug\net8.0\staticwebassets.pack.json
 C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem\obj\Debug\net8.0\scopedcss\bundle\InventoryManagementSystem.styles.css
-C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem\obj\Debug\net8.0\InventoryManagementSystem.csproj.CopyComplete
 C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem\obj\Debug\net8.0\InventoryManagementSystem.dll
 C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem\obj\Debug\net8.0\refint\InventoryManagementSystem.dll
 C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem\obj\Debug\net8.0\InventoryManagementSystem.pdb
@@ -82,3 +81,4 @@ C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagem
 C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem\bin\Debug\net8.0\StarkbankEcdsa.dll
 C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem\bin\Debug\net8.0\Stripe.net.dll
 C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem\bin\Debug\net8.0\InventoryManagementSystem.staticwebassets.runtime.json
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem\obj\Debug\net8.0\Inventor.EBF2E7CF.Up2Date

@@ -1,14 +1,31 @@
-<div class="container mt-5">
-  <div class="row justify-content-center">
-    <div class="col-md-6">
+<div class="container">
+  <div class="row col-md-10 mx-auto">
+    <div class="col-md-6 mt-4 p-5 img-container">
+      <img
+        src="assets/images/login.jpg"
+        alt="Login Banner"
+        class="img-fluid rounded"
+      />
+    </div>
+    <div class="col-md-6 mt-4 p-5">
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title">Login</h3>
+          <h3 class="card-title" *ngIf="!isForgotPassword && !isResetPassword">
+            Login to your account
+          </h3>
+          <h3 class="card-title" *ngIf="isForgotPassword">Forgot Password</h3>
+          <h3 class="card-title" *ngIf="isResetPassword">
+            Reset Your Password
+          </h3>
         </div>
         <div class="card-body">
-          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <form
+            *ngIf="!isForgotPassword && !isResetPassword"
+            [formGroup]="loginForm"
+            (ngSubmit)="onSubmit()"
+          >
             <div *ngIf="errorMessage" class="alert alert-danger">
-              {{ this.errorMessage }}
+              {{ errorMessage }}
             </div>
             <div class="form-group mb-3">
               <label for="username" class="form-label">Username</label>
@@ -32,12 +49,35 @@
             </div>
             <div class="form-group mb-3">
               <label for="password" class="form-label">Password</label>
-              <input
-                id="password"
-                formControlName="password"
-                type="password"
-                class="form-control"
-              />
+              <div class="input-group">
+                <input
+                  id="password"
+                  formControlName="password"
+                  [type]="showPassword ? 'text' : 'password'"
+                  class="form-control"
+                  (input)="onPasswordInput()"
+                />
+                <span
+                  class="input-group-text"
+                  *ngIf="passwordHasValue"
+                  (click)="toggleShowPassword()"
+                  style="
+                    cursor: pointer;
+                    position: absolute;
+                    right: 10px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                  "
+                >
+                  <i
+                    class="fas"
+                    [ngClass]="{
+                      'fa-eye': !showPassword,
+                      'fa-eye-slash': showPassword
+                    }"
+                  ></i>
+                </span>
+              </div>
               <div
                 *ngIf="
                   loginForm.get('password')?.invalid &&
@@ -50,11 +90,152 @@
                 >
               </div>
             </div>
-
-            <button type="submit" class="btn btn-primary">Login</button>
+            <button type="submit" class="form-control btn btn-primary">
+              Login
+            </button>
+            <p class="text-center mt-4 form-control bg-light">
+              or
+              <a (click)="toggleForgotPassword()"
+                ><strong class="text-primary">Forgot Password</strong></a
+              >
+            </p>
           </form>
+
+          <form
+            *ngIf="isForgotPassword && !isForgotPasswordSubmitted"
+            [formGroup]="forgotPasswordForm"
+            (ngSubmit)="onSubmit()"
+          >
+            <div *ngIf="successMessage" class="alert alert-success">
+              {{ successMessage }}
+            </div>
+            <div *ngIf="errorMessage" class="alert alert-danger">
+              {{ errorMessage }}
+            </div>
+            <div class="form-group mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input
+                id="email"
+                formControlName="email"
+                type="email"
+                class="form-control"
+              />
+              <div
+                *ngIf="
+                  forgotPasswordForm.get('email')?.invalid &&
+                  forgotPasswordForm.get('email')?.touched
+                "
+                class="text-danger"
+              >
+                <small
+                  *ngIf="forgotPasswordForm.get('email')?.errors?.['required']"
+                  >Email is required</small
+                >
+                <small
+                  *ngIf="forgotPasswordForm.get('email')?.errors?.['email']"
+                  >Email must be a valid email address</small
+                >
+              </div>
+            </div>
+            <button type="submit" class="form-control btn btn-primary">
+              Reset Password
+            </button>
+            <p class="text-center mt-4 form-control bg-light">
+              or
+              <a (click)="toggleForgotPassword()"
+                ><strong class="text-primary">Login</strong></a
+              >
+            </p>
+          </form>
+
+          <form
+            *ngIf="isResetPassword"
+            [formGroup]="resetPasswordForm"
+            (ngSubmit)="onSubmit()"
+          >
+            <div *ngIf="successMessage" class="alert alert-success">
+              {{ successMessage }}
+            </div>
+            <div *ngIf="errorMessage" class="alert alert-danger">
+              {{ errorMessage }}
+            </div>
+            <div class="form-group mb-3">
+              <label for="newPassword" class="form-label">New Password</label>
+              <input
+                id="newPassword"
+                formControlName="newPassword"
+                type="password"
+                class="form-control"
+              />
+              <div
+                *ngIf="
+                  resetPasswordForm.get('newPassword')?.invalid &&
+                  resetPasswordForm.get('newPassword')?.touched
+                "
+                class="text-danger"
+              >
+                <small
+                  *ngIf="resetPasswordForm.get('newPassword')?.errors?.['required']"
+                  >New Password is required</small
+                >
+                <small
+                  *ngIf="resetPasswordForm.get('newPassword')?.errors?.['minlength']"
+                  >New Password must be at least 8 characters</small
+                >
+              </div>
+            </div>
+            <div class="form-group mb-3">
+              <label for="confirmPassword" class="form-label"
+                >Confirm Password</label
+              >
+              <input
+                id="confirmPassword"
+                formControlName="confirmPassword"
+                type="password"
+                class="form-control"
+              />
+              <div
+                *ngIf="
+                  resetPasswordForm.get('confirmPassword')?.invalid &&
+                  resetPasswordForm.get('confirmPassword')?.touched
+                "
+                class="text-danger"
+              >
+                <small
+                  *ngIf="resetPasswordForm.get('confirmPassword')?.errors?.['required']"
+                  >Confirm Password is required</small
+                >
+                <small
+                  *ngIf="resetPasswordForm.get('confirmPassword')?.errors?.['minlength']"
+                  >Confirm Password must be at least 8 characters</small
+                >
+              </div>
+            </div>
+            <button type="submit" class="form-control btn btn-primary">
+              Reset Password
+            </button>
+            <p class="text-center mt-4 form-control bg-light">
+              or
+              <a (click)="toggleForgotPassword()"
+                ><strong class="text-primary">Back to Login</strong></a
+              >
+            </p>
+          </form>
+
+          <div *ngIf="isForgotPassword && isForgotPasswordSubmitted">
+            <div *ngIf="successMessage" class="alert alert-success">
+              {{ successMessage }}
+            </div>
+          </div>
         </div>
+      </div>
+      <div class="form-group mt-3 text-center">
+        <p class="form-control bg-light p-2">
+          Don't have an account?
+          <a [routerLink]="['/register']"><strong>Sign up</strong></a>
+        </p>
       </div>
     </div>
   </div>
+  <hr />
 </div>

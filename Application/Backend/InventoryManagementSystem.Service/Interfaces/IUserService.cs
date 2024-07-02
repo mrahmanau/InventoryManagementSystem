@@ -14,5 +14,6 @@ namespace InventoryManagementSystem.Service
         Task DeleteUserAsync(int userId);
         Task UpdateUserAsync(UserDTO user);
         Task AddLogAsync(UserActivityLogDTO log);
+        Task<bool> UpdateUserProfileAsync(EditProfileDTO editProfileDto);
     }
 }

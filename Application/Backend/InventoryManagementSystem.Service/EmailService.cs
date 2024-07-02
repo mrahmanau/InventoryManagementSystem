@@ -78,5 +78,35 @@ namespace InventoryManagementSystem.Service
                 throw;
             }
         }
+
+        public async Task RequestPasswordResetAsync(string email, string resetToken, string firstName)
+        {
+            var client = new SendGridClient(_sendGridApiKey);
+            var from = new EmailAddress("admin@mahfuzurr.com", "Inventory Management System");
+            var subject = "Password Reset Request";
+            var to = new EmailAddress(email);
+            var encodedToken = WebUtility.UrlEncode(resetToken);
+            var resetLink = $"{_baseUrl}/reset-password?token={encodedToken}";
+            var plainTextContent = $"Hi {firstName},\n\nA password reset for your account was requested.\n\nPlease click the button below to change your password.\n\n{resetLink}\n\nNote that this link is valid for 24 hours. If you did not make this request, please contact support.";
+            var htmlContent = $"<p>Hi {firstName},</p><p>A password reset for your account was requested. Please click the button below to change your password.</p><p><a href='{resetLink}'>Change Your Password</a></p><p>Note that this link is valid for 24 hours. If you did not make this request, please contact support.</p>";
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+
+            try
+            {
+                var response = await client.SendEmailAsync(msg);
+                _logger.LogInformation("Email sent. Status code: {StatusCode}", response.StatusCode);
+
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    string responseBody = await response.Body.ReadAsStringAsync();
+                    _logger.LogError("SendGrid response error: {ResponseBody}", responseBody);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error sending email");
+                throw;
+            }
+        }
     }
 }

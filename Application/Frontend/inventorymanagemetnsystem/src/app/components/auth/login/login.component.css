@@ -1,0 +1,50 @@
+.card {
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  background-color: #007bff;
+  color: white;
+  border-bottom: none;
+  border-radius: 10px 10px 0 0;
+}
+
+.card-title {
+  margin-bottom: 0;
+}
+
+.img-fluid {
+  border-radius: 10px;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Ensure the image container does not overflow */
+.img-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.img-container img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.input-group-text {
+  background-color: white;
+  border-left: 0;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  padding: 0.375rem 0.75rem;
+}
+
+.input-group .form-control {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}

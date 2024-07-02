@@ -8,11 +8,12 @@ import {
 import { AuthService } from '../../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, HttpClientModule],
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, RouterModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
@@ -68,7 +69,7 @@ export class RegisterComponent {
   registerUser(user: any) {
     this.authService.register(user).subscribe({
       next: (res) => {
-        this.successMessage = 'User registered successfully.';
+        this.successMessage = res.Message;
         this.registerForm.reset();
         this.isLoading = false;
       },

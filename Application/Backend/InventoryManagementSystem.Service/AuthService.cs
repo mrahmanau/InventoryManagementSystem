@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -68,7 +69,7 @@ namespace InventoryManagementSystem.Service
                 return new RegisterResultDTO
                 {
                     UserId = userId,
-                    Message = "User registered successfully",
+                    Message = "A confirmation link has been sent to your email. Please confirm your account by clicking the link.",
                 };
             }
             catch(UserAlreadyExistsException ex)
@@ -167,6 +168,69 @@ namespace InventoryManagementSystem.Service
             return user;
         }
 
+        public async Task<bool> UpdatePasswordAsync(EditPasswordDTO editPasswordDTO)
+        {
+            var user = await _repo.GetUserByIdAsync(editPasswordDTO.UserId);
+
+            if (user == null)
+            {
+                throw new Exception("User not found.");
+            }
+
+            var hashedCurrentPassword = HashPassword(editPasswordDTO.CurrentPassword);
+            var currentHashedPassword = await _repo.GetHashedPasswordAsync(editPasswordDTO.UserId);
+
+            if (currentHashedPassword != hashedCurrentPassword)
+            {
+                throw new Exception("Current password is incorrect.");
+            }
+
+            var passwordErrors = GetPasswordComplexityErrors(editPasswordDTO.NewPassword);
+            if (passwordErrors.Any())
+            {
+                throw new ValidationException(string.Join(" ", passwordErrors));
+            }
+
+            var hashedNewPassword = HashPassword(editPasswordDTO.NewPassword);
+            return await _repo.UpdatePasswordAsync(editPasswordDTO.UserId, hashedNewPassword);
+        }
+
+        public async Task<bool> RequestPasswordResetAsync(string email)
+        {
+            var user = await _repo.GetUserByEmailAsync(email);
+
+            if (user == null)
+            {
+                throw new Exception("User not found.");
+            }
+
+            var resetToken = await _repo.GeneratePasswordResetTokenAsync(user.UserId);
+
+            await _emailService.RequestPasswordResetAsync(user.Email, resetToken, user.FirstName);
+
+            return true;
+        }
+
+        public async Task<bool> ResetPasswordAsync(ResetPasswordDTO resetPasswordDTO)
+        {
+            var user = await _repo.GetUserByResetTokenAsync(resetPasswordDTO.Token);
+
+            if (user == null)
+            {
+                throw new Exception("Invalid or expired password reset token.");
+            }
+
+            var passwordErrors = GetPasswordComplexityErrors(resetPasswordDTO.NewPassword);
+            if (passwordErrors.Any())
+            {
+                throw new ValidationException(string.Join(" ", passwordErrors));
+            }
+
+            var hashedNewPassword = HashPassword(resetPasswordDTO.NewPassword);
+            return await _repo.UpdatePasswordAsync(user.UserId, hashedNewPassword);
+        }
+
+
         public class UserAlreadyExistsException : Exception
         {
             public UserAlreadyExistsException(string message) : base(message)
@@ -177,6 +241,40 @@ namespace InventoryManagementSystem.Service
         #endregion
 
         #region Private Methods
+
+        private List<string> GetPasswordComplexityErrors(string password)
+        {
+            var errors = new List<string>();
+
+            if (password.Length < 8)
+            {
+                errors.Add("Password must be at least 8 characters long.");
+            }
+
+            if (!Regex.IsMatch(password, @"[A-Z]"))
+            {
+                errors.Add("At least one uppercase letter is required.");
+            }
+
+            if (!Regex.IsMatch(password, @"[a-z]"))
+            {
+                errors.Add("At least one lowercase letter is required.");
+            }
+
+            if (!Regex.IsMatch(password, @"[0-9]"))
+            {
+                errors.Add("At least one number is required.");
+            }
+
+            if (!Regex.IsMatch(password, @"[\W]"))
+            {
+                errors.Add("At least one special character is required.");
+            }
+
+            return errors;
+        }
+
+
         private string HashPassword(string password)
         {
             using (SHA256 sha256 = SHA256.Create())

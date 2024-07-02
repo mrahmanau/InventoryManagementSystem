@@ -45,6 +45,8 @@ CREATE TABLE Users (
     EmailConfirmationToken NVARCHAR(200) NULL, 
 	TwoFactorCode NVARCHAR(6) NULL,
     TwoFactorCodeExpiration DATETIME NULL,
+	PasswordResetToken NVARCHAR(200) NULL,
+	PasswordResetTokenExpiration DATETIME NULL,
 	Version ROWVERSION,
     FOREIGN KEY (RoleId) REFERENCES Roles(RoleId)
 );
@@ -127,11 +129,11 @@ INSERT INTO Roles (RoleName) VALUES ('Admin'), ('User');
 -- Insert into Users table
 INSERT INTO Users (FirstName, LastName, Username, Email, HashedPassword, RoleId)
 VALUES 
-    ('Mahfuzur', 'Rahman', 'mahfuz', 'mrahmanlinks@gmail.com', CONVERT(VARCHAR(64), HASHBYTES('SHA2_256', '123@Abc'), 2), 1),
-    ('Shah', 'Alom', 'salom', 'shahalom.talha@yahoo.com', CONVERT(VARCHAR(64), HASHBYTES('SHA2_256', '123@Abc'), 2), 1),
-    ('Shawon', 'Alom', 'shawon', 'shawon.alom@outlook.com', CONVERT(VARCHAR(64), HASHBYTES('SHA2_256', '123@Abc'), 2), 2),
-    ('Emily', 'Davis', 'emilyd', 'emily.davis@example.com', CONVERT(VARCHAR(64), HASHBYTES('SHA2_256', '123@Abc'), 2), 2),
-    ('David', 'Brown', 'davidb', 'david.brown@example.com', CONVERT(VARCHAR(64), HASHBYTES('SHA2_256', '123@Abc'), 2), 2);
+    ('Mahfuzur', 'Rahman', 'mahfuz', 'mrahmanlinks@gmail.com', CONVERT(VARCHAR(64), HASHBYTES('SHA2_256', '1234@Abcd'), 2), 1),
+    ('Shah', 'Alom', 'salom', 'shahalom.talha@yahoo.com', LOWER(CONVERT(VARCHAR(64), HASHBYTES('SHA2_256', '1234@Abcd'), 2)), 1),
+    ('Shawon', 'Alom', 'shawon', 'shawon.alom@outlook.com', CONVERT(VARCHAR(64), HASHBYTES('SHA2_256', '1234@Abcd'), 2), 2),
+    ('Emily', 'Davis', 'emilyd', 'emily.davis@example.com', CONVERT(VARCHAR(64), HASHBYTES('SHA2_256', '1234@Abcd'), 2), 2),
+    ('David', 'Brown', 'davidb', 'david.brown@example.com', CONVERT(VARCHAR(64), HASHBYTES('SHA2_256', '1234@Abcd'), 2), 2);
 
 -- Insert into Categories table
 INSERT INTO Categories (CategoryName)
@@ -272,6 +274,88 @@ BEGIN
 END;
 GO
 
+-- Update profile
+CREATE OR ALTER PROCEDURE spUpdateUserProfile
+    @UserId INT,
+    @FirstName NVARCHAR(50),
+    @LastName NVARCHAR(50),
+    @Email NVARCHAR(100),
+    @Username NVARCHAR(50)
+AS
+BEGIN
+    IF EXISTS (SELECT 1 FROM Users WHERE Username = @Username AND UserId != @UserId)
+    BEGIN
+        RAISERROR('Username already exists.', 16, 1);
+        RETURN;
+    END
+
+    UPDATE Users
+    SET FirstName = @FirstName,
+        LastName = @LastName,
+        Email = @Email,
+        Username = @Username
+    WHERE UserId = @UserId;
+END;
+GO
+
+-- Get user's hashed password
+CREATE OR ALTER PROCEDURE spGetHashedPassword
+    @UserId INT
+AS
+BEGIN
+    SELECT HashedPassword
+    FROM Users
+    WHERE UserId = @UserId;
+END;
+GO
+
+
+-- Update password
+CREATE OR ALTER PROCEDURE spUpdatePassword
+    @UserId INT,
+    @NewPassword NVARCHAR(200)
+AS
+BEGIN
+    UPDATE Users
+    SET HashedPassword = @NewPassword
+    WHERE UserId = @UserId;
+END;
+GO
+
+-- Reset password
+CREATE OR ALTER PROCEDURE spResetPassword
+    @UserId INT,
+    @NewPassword NVARCHAR(200)
+AS
+BEGIN
+    UPDATE Users
+    SET HashedPassword = @NewPassword, PasswordResetToken = NULL, PasswordResetTokenExpiration = NULL
+    WHERE UserId = @UserId;
+END;
+GO
+
+-- Get user by reset token
+CREATE OR ALTER PROCEDURE spGetUserByResetToken
+    @PasswordResetToken NVARCHAR(200)
+AS
+BEGIN
+    SELECT 
+        UserId,
+        FirstName,
+        LastName,
+        Username,
+        Email,
+        RoleId,
+        EmailConfirmed
+    FROM Users
+    WHERE PasswordResetToken = @PasswordResetToken AND PasswordResetTokenExpiration > GETUTCDATE();
+END;
+GO
+
+
+
+
+
 
 -- Delete user
 CREATE OR ALTER PROCEDURE spDeleteUser
@@ -332,19 +416,6 @@ BEGIN
 END;
 GO
 
---CREATE OR ALTER PROCEDURE spUpdateTwoFactorCode
---    @UserId INT,
---    @TwoFactorCode NVARCHAR(6),
---    @TwoFactorCodeExpiration DATETIME
---AS
---BEGIN
---    UPDATE Users
---    SET TwoFactorCode = @TwoFactorCode,
---        TwoFactorCodeExpiration = @TwoFactorCodeExpiration
---    WHERE UserId = @UserId;
---END;
---GO
-
 CREATE OR ALTER PROCEDURE spUpdateTwoFactorCode
     @UserId INT,
     @TwoFactorCode NVARCHAR(6) = NULL,
@@ -357,6 +428,41 @@ BEGIN
     WHERE UserId = @UserId;
 END;
 GO
+
+-- Get user by email
+CREATE OR ALTER PROCEDURE spGetUserByEmail
+    @Email NVARCHAR(100)
+AS
+BEGIN
+    SELECT 
+        UserId,
+        FirstName,
+        LastName,
+        Username,
+        Email,
+        RoleId,
+        EmailConfirmed
+    FROM Users
+    WHERE Email = @Email;
+END;
+GO
+
+-- Update password reset token
+CREATE OR ALTER PROCEDURE spUpdatePasswordResetToken
+    @UserId INT,
+    @ResetToken NVARCHAR(200),
+    @Expiration DATETIME
+AS
+BEGIN
+    UPDATE Users
+    SET 
+        PasswordResetToken = @ResetToken,
+        PasswordResetTokenExpiration = @Expiration
+    WHERE UserId = @UserId;
+END;
+GO
+
+
 
 -- Add payment details
 CREATE OR ALTER PROCEDURE spAddPayment
@@ -398,8 +504,6 @@ BEGIN
     WHERE PaymentIntentId = @PaymentIntentId;
 END;
 GO
-
-
 
 -- Add a product
 CREATE OR ALTER PROCEDURE spAddProduct
@@ -466,7 +570,6 @@ BEGIN
       AND (@MaxPrice IS NULL OR Price <= @MaxPrice);
 END;
 GO
-
 
 -- Get product by name
 CREATE OR ALTER PROCEDURE spGetProductByName

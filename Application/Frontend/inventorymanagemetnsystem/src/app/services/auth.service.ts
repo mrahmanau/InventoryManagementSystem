@@ -7,6 +7,8 @@ import { UserLoginDTO } from '../models/UserLoginDTO';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { TwoFactorDTO } from '../models/TwoFactorDTO';
 import { LoginOutputDTO } from '../models/LoginOutputDTO';
+import { ForgotPasswordDTO } from '../models/ForgotPasswordDTO ';
+import { ResetPasswordDTO } from '../models/ResetPasswordDTO';
 
 @Injectable({
   providedIn: 'root',
@@ -131,5 +133,13 @@ export class AuthService {
       `${API_URL}/Auth/upload-profile-image`,
       formData
     );
+  }
+
+  requestPasswordReset(email: ForgotPasswordDTO): Observable<any> {
+    return this.http.post(`${API_URL}/auth/request-password-reset`, email);
+  }
+
+  resetPassword(resetPasswordDTO: ResetPasswordDTO): Observable<any> {
+    return this.http.post(`${API_URL}/auth/reset-password`, resetPasswordDTO);
   }
 }

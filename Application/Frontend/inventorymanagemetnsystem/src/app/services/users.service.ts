@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { UsersListDTO } from '../models/UserListDTO';
 import { API_URL } from './shared.service';
 import { UserDTO } from '../models/UserDTO';
+import { EditProfileDTO } from '../models/EditProfileDTO';
+import { EditPasswordDTO } from '../models/EditPasswordDTO';
 
 @Injectable({
   providedIn: 'root',
@@ -29,5 +31,13 @@ export class UsersService {
     return this.http.put(`${API_URL}/Users/${user.userId}`, user, {
       responseType: 'text',
     });
+  }
+
+  updateProfile(editProfileDto: EditProfileDTO): Observable<any> {
+    return this.http.put(`${API_URL}/Users/update-profile`, editProfileDto);
+  }
+
+  updatePassword(editPasswordDTO: EditPasswordDTO): Observable<any> {
+    return this.http.post(`${API_URL}/Auth/update-password`, editPasswordDTO);
   }
 }

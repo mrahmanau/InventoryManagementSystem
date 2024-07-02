@@ -29,11 +29,11 @@ namespace InventoryManagementSystem.Repository
             var dt = await _db.ExecuteAsync("spGetUserByUsername", parms);
 
                // Log the column names for debugging
-                Console.WriteLine("Columns in the returned DataTable:");
-                foreach (DataColumn column in dt.Columns)
-                {
-                    Console.WriteLine(column.ColumnName);
-                }
+                //Console.WriteLine("Columns in the returned DataTable:");
+                //foreach (DataColumn column in dt.Columns)
+                //{
+                //    Console.WriteLine(column.ColumnName);
+                //}
 
             if (dt.Rows.Count == 0)
                 return null;
@@ -74,6 +74,71 @@ namespace InventoryManagementSystem.Repository
             var userId = await _db.ExecuteScalarAsync<int>("spAddUser", parms);
             return userId;
         }
+
+        public async Task<bool> UpdateUserProfileAsync(EditProfileDTO editProfileDto)
+        {
+            try
+            {
+                var parms = new List<Parm>
+                {
+                    new Parm("@UserId", SqlDbType.Int, editProfileDto.UserId),
+                    new Parm("@FirstName", SqlDbType.NVarChar, editProfileDto.FirstName, 50),
+                    new Parm("@LastName", SqlDbType.NVarChar, editProfileDto.LastName, 50),
+                    new Parm("@Email", SqlDbType.NVarChar, editProfileDto.Email, 100),
+                    new Parm("@Username", SqlDbType.NVarChar, editProfileDto.Username, 50)
+                };
+
+                var result = await _db.ExecuteNonQueryAsync("spUpdateUserProfile", parms);
+                return result > 0;
+            }
+            catch (SqlException ex)
+            {
+                if (ex.Number == 50000 && ex.Message.Contains("Username already exists."))
+                {
+                    throw new Exception("Username already exists.");
+                }
+                throw new Exception("An error occurred while updating the user profile.", ex);
+            }
+        }
+
+        public async Task<string> GetHashedPasswordAsync(int userId)
+        {
+            var parms = new List<Parm>
+            {
+                new Parm("@UserId", SqlDbType.Int, userId)
+            };
+
+            var dt = await _db.ExecuteAsync("spGetHashedPassword", parms);
+
+            if (dt.Rows.Count == 0)
+            {
+                throw new Exception("User not found.");
+            }
+
+            var row = dt.Rows[0];
+            return row["HashedPassword"].ToString();
+        }
+
+
+        public async Task<bool> UpdatePasswordAsync(int userId, string hashedNewPassword)
+        {
+            try
+            {
+                var parms = new List<Parm>
+                {
+                    new Parm("@UserId", SqlDbType.Int, userId),
+                    new Parm("@NewPassword", SqlDbType.NVarChar, hashedNewPassword, 200)
+                };
+
+                var result = await _db.ExecuteNonQueryAsync("spUpdatePassword", parms);
+                return result > 0;
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("An error occurred while updating the password.", ex);
+            }
+        }
+
 
         public async Task<User> GetUserByUsernameAndPasswordAsync(string username, string hashedPassword)
         {
@@ -135,6 +200,102 @@ namespace InventoryManagementSystem.Repository
             };
 
             await _db.ExecuteNonQueryAsync("spUpdateTwoFactorCode", parms);
+        }
+
+        public async Task<User> GetUserByEmailAsync(string email)
+        {
+            var parms = new List<Parm>
+            {
+                new Parm("@Email", SqlDbType.NVarChar, email, 100)
+            };
+
+            var dt = await _db.ExecuteAsync("spGetUserByEmail", parms);
+
+            if (dt.Rows.Count == 0)
+            {
+                return null;
+            }
+
+            var row = dt.Rows[0];
+            return new User
+            {
+                UserId = (int)row["UserId"],
+                FirstName = row["FirstName"].ToString(),
+                LastName = row["LastName"].ToString(),
+                Username = row["Username"].ToString(),
+                Email = row["Email"].ToString(),
+                RoleId = (int)row["RoleId"],
+                EmailConfirmed = (bool)row["EmailConfirmed"]
+            };
+        }
+
+        public async Task<string> GeneratePasswordResetTokenAsync(int userId)
+        {
+            var token = Guid.NewGuid().ToString();
+            var expiration = DateTime.UtcNow.AddHours(24);
+
+            var parms = new List<Parm>
+            {
+                new Parm("@UserId", SqlDbType.Int, userId),
+                new Parm("@ResetToken", SqlDbType.NVarChar, token, 200),
+                new Parm("@Expiration", SqlDbType.DateTime, expiration)
+            };
+
+            await _db.ExecuteNonQueryAsync("spUpdatePasswordResetToken", parms);
+
+            return token;
+        }
+
+        public async Task<bool> UpdatePasswordResetTokenAsync(int userId, string resetToken, DateTime expiration)
+        {
+            var parms = new List<Parm>
+            {
+                new Parm("@UserId", SqlDbType.Int, userId),
+                new Parm("@ResetToken", SqlDbType.NVarChar, resetToken, 200),
+                new Parm("@Expiration", SqlDbType.DateTime, expiration)
+            };
+
+            var result = await _db.ExecuteNonQueryAsync("spUpdatePasswordResetToken", parms);
+            return result > 0;
+        }
+
+        public async Task<User> GetUserByResetTokenAsync(string token)
+        {
+            var parms = new List<Parm>
+    {
+        new Parm("@PasswordResetToken", SqlDbType.NVarChar, token, 200)
+    };
+
+            var dt = await _db.ExecuteAsync("spGetUserByResetToken", parms);
+
+            if (dt.Rows.Count == 0)
+            {
+                return null;
+            }
+
+            var row = dt.Rows[0];
+            return new User
+            {
+                UserId = (int)row["UserId"],
+                FirstName = row["FirstName"].ToString(),
+                LastName = row["LastName"].ToString(),
+                Username = row["Username"].ToString(),
+                Email = row["Email"].ToString(),
+                RoleId = (int)row["RoleId"],
+                EmailConfirmed = (bool)row["EmailConfirmed"]
+            };
+        }
+
+        public async Task<bool> ResetPasswordAsync(int userId, string hashedNewPassword)
+        {
+            var parms = new List<Parm>
+        {
+            new Parm("@UserId", SqlDbType.Int, userId),
+            new Parm("@NewPassword", SqlDbType.NVarChar, hashedNewPassword, 200)
+        };
+
+            var result = await _db.ExecuteNonQueryAsync("spResetPassword", parms);
+            return result > 0;
         }
 
 

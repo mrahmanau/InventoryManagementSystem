@@ -21,5 +21,13 @@ namespace InventoryManagementSystem.Repository
         Task UpdateEmailConfirmationStatusAsync(User user);
         Task UpdateTwoFactorCodeAsync(UserDTO user);
         Task ClearTwoFactorCodeAsync(int userId);
+        Task<bool> UpdateUserProfileAsync(EditProfileDTO editProfileDto);
+        Task<string> GetHashedPasswordAsync(int userId);
+        Task<bool> UpdatePasswordAsync(int userId, string hashedNewPassword);
+        Task<User> GetUserByEmailAsync(string email);
+        Task<string> GeneratePasswordResetTokenAsync(int userId);
+        Task<bool> UpdatePasswordResetTokenAsync(int userId, string resetToken, DateTime expiration);
+        Task<User> GetUserByResetTokenAsync(string token);
+        Task<bool> ResetPasswordAsync(int userId, string hashedNewPassword);
     }
 }

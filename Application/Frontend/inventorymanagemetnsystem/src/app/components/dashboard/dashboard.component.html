@@ -59,10 +59,107 @@
               style="width: 150px; height: 150px; object-fit: cover"
             />
           </div>
-          <p><strong>Name:</strong> {{ firstName }} {{ lastName }}</p>
-          <p><strong>Email:</strong> {{ email }}</p>
-          <p><strong>Role:</strong> {{ role }}</p>
-          <a href="#" class="btn btn-info mt-3">Edit Profile</a>
+          <p>
+            <strong>Name:</strong> {{ firstName }} {{ lastName }} <br />
+            <strong>Email:</strong> {{ email }} <br />
+            <strong>Role:</strong> {{ role }}
+          </p>
+          <a [routerLink]="['/edit-profile']" class="btn btn-info m-2"
+            >Edit Profile</a
+          >
+          <button class="btn btn-danger m-2" (click)="togglePasswordForm()">
+            Edit Password
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Password Form Section -->
+  <div *ngIf="showPasswordForm" class="row mt-4 justify-content-center">
+    <div class="col-md-6">
+      <div class="card border-warning">
+        <div
+          class="card-header bg-warning text-white d-flex justify-content-between align-items-center"
+        >
+          <h4 class="card-title mb-0">Edit Password</h4>
+          <button
+            type="button"
+            class="btn-close"
+            aria-label="Close"
+            (click)="togglePasswordForm()"
+          ></button>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="editPasswordForm" (ngSubmit)="onSubmitPassword()">
+            <div *ngIf="errorMessage" class="alert alert-danger">
+              {{ errorMessage }}
+            </div>
+            <div *ngIf="successMessage" class="alert alert-success">
+              {{ successMessage }}
+            </div>
+            <div class="form-group mb-3">
+              <label for="currentPassword" class="form-label"
+                >Current Password</label
+              >
+              <input
+                id="currentPassword"
+                formControlName="currentPassword"
+                type="password"
+                class="form-control"
+              />
+              <div
+                *ngIf="
+                  editPasswordForm.get('currentPassword')?.invalid &&
+                  editPasswordForm.get('currentPassword')?.touched
+                "
+                class="text-danger"
+              >
+                <small
+                  *ngIf="editPasswordForm.get('currentPassword')?.errors?.['required']"
+                  >Current password is required</small
+                >
+              </div>
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="newPassword" class="form-label">New Password</label>
+              <input
+                id="newPassword"
+                formControlName="newPassword"
+                type="password"
+                class="form-control"
+              />
+              <div
+                *ngIf="
+                  editPasswordForm.get('newPassword')?.invalid &&
+                  editPasswordForm.get('newPassword')?.touched
+                "
+                class="text-danger"
+              >
+                <small
+                  *ngIf="editPasswordForm.get('newPassword')?.errors?.['required']"
+                  >New password is required</small
+                >
+                <small
+                  *ngIf="editPasswordForm.get('newPassword')?.errors?.['minlength']"
+                  >New password must be at least 8 characters</small
+                >
+                <small
+                  *ngIf="editPasswordForm.get('newPassword')?.errors?.['pattern']"
+                  >New password must contain at least one uppercase letter, one
+                  lowercase letter, one number, and one special character</small
+                >
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="editPasswordForm.invalid"
+            >
+              Update Password
+            </button>
+          </form>
         </div>
       </div>
     </div>

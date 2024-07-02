@@ -1,13 +1,14 @@
-<p>email-confirmation works!</p>
-
-<div *ngIf="message" class="confirmation-message">
-  <div
-    [ngClass]="{
-      'alert alert-success': isSuccess,
-      'alert alert-danger': !isSuccess
-    }"
-    role="alert"
-  >
-    {{ message }}
+<div class="container mt-5">
+  <div *ngIf="message" class="confirmation-message">
+    <div
+      [ngClass]="{
+        'alert alert-success': isSuccess,
+        'alert alert-danger': !isSuccess
+      }"
+      role="alert"
+    >
+      {{ message }}
+      <div *ngIf="isSuccess">Redirecting to login page...</div>
+    </div>
   </div>
 </div>

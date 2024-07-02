@@ -13,8 +13,8 @@ C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagem
 C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Repository\obj\Debug\net8.0\InventoryManagementSystem.Repository.AssemblyInfo.cs
 C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Repository\obj\Debug\net8.0\InventoryManagementSystem.Repository.csproj.CoreCompileInputs.cache
 C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Repository\obj\Debug\net8.0\InventoryManagementSystem.Repository.sourcelink.json
-C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Repository\obj\Debug\net8.0\InventoryManagementSystem.Repository.csproj.CopyComplete
 C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Repository\obj\Debug\net8.0\InventoryManagementSystem.Repository.dll
 C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Repository\obj\Debug\net8.0\refint\InventoryManagementSystem.Repository.dll
 C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Repository\obj\Debug\net8.0\InventoryManagementSystem.Repository.pdb
 C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Repository\obj\Debug\net8.0\ref\InventoryManagementSystem.Repository.dll
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Repository\obj\Debug\net8.0\Inventor.8A65E669.Up2Date

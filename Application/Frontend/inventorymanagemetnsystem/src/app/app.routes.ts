@@ -15,6 +15,7 @@ import { TwoFactorAuthenticationComponent } from './components/auth/two-factor-a
 import { PaymentComponent } from './components/payment/payment.component';
 import { CartComponent } from './components/cart/cart.component';
 import { ContactComponent } from './components/contact/contact.component';
+import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 
 export const routes: Routes = [
   {
@@ -34,12 +35,14 @@ export const routes: Routes = [
     path: '2fa',
     component: TwoFactorAuthenticationComponent,
   },
+  { path: 'reset-password', component: LoginComponent },
   { path: 'payment', component: PaymentComponent },
   {
     path: 'dashboard',
     component: DashboardComponent,
     canActivate: [AuthGuard],
   },
+  { path: 'edit-profile', component: EditProfileComponent },
   {
     path: 'admin',
     component: AdminComponent,

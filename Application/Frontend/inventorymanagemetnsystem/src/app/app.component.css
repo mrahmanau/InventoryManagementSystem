@@ -1,25 +1,7 @@
-html,
-body {
-  height: 100%;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-app-navbar,
-app-footer {
-  flex-shrink: 0;
-}
-
-.main-content {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-height: 100vh;
-}
-
 .container {
-  flex-grow: 1;
-  min-height: 100vh;
+  margin: 2rem auto;
+}
+
+footer {
+  flex-shrink: 0;
 }

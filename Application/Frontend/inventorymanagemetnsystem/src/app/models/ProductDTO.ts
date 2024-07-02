@@ -4,4 +4,5 @@ export interface ProductDTO {
   quantity: number;
   price: number;
   categoryId: number;
+  imageUrl: string;
 }

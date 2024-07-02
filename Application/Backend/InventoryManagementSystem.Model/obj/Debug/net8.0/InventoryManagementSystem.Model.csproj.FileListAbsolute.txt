@@ -9,8 +9,8 @@ C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagem
 C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Model\obj\Debug\net8.0\InventoryManagementSystem.Model.AssemblyInfo.cs
 C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Model\obj\Debug\net8.0\InventoryManagementSystem.Model.csproj.CoreCompileInputs.cache
 C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Model\obj\Debug\net8.0\InventoryManagementSystem.Model.sourcelink.json
-C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Model\obj\Debug\net8.0\InventoryManagementSystem.Model.csproj.CopyComplete
 C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Model\obj\Debug\net8.0\InventoryManagementSystem.Model.dll
 C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Model\obj\Debug\net8.0\refint\InventoryManagementSystem.Model.dll
 C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Model\obj\Debug\net8.0\InventoryManagementSystem.Model.pdb
 C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Model\obj\Debug\net8.0\ref\InventoryManagementSystem.Model.dll
+C:\src\portfolios\InventoryManagementSystem\Application\Backend\InventoryManagementSystem.Model\obj\Debug\net8.0\Inventor.C781D25C.Up2Date

@@ -118,5 +118,23 @@ namespace InventoryManagementSystem.Controllers
             }
         }
 
+
+        [HttpPut("update-profile")]
+        public async Task<IActionResult> UpdateProfile([FromBody] EditProfileDTO editProfileDto)
+        {
+            try
+            {
+                var result = await _userService.UpdateUserProfileAsync(editProfileDto);
+                if (!result)
+                {
+                    return BadRequest(new { message = "Failed to update profile." });
+                }
+                return Ok(new { message = "Profile updated successfully." });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
     }
 }

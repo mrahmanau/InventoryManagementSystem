@@ -10,5 +10,6 @@ namespace InventoryManagementSystem.Service
     {
         Task SendEmailConfirmationAsync(string email, string token);
         Task SendTwoFactorCodeAsync(string email, string twoFactorCode);
+        Task RequestPasswordResetAsync(string email, string resetToken, string firstName);
     }
 }

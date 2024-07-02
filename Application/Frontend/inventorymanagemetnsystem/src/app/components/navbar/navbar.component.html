@@ -38,16 +38,26 @@
             <li *ngIf="isAdmin()">
               <a routerLink="/add-product" class="dropdown-item">Add Product</a>
             </li>
-
             <li>
               <a routerLink="/products-list" class="dropdown-item">Products</a>
             </li>
           </ul>
         </li>
-
         <li class="nav-item" *ngIf="isAuthenticated()">
           <a routerLink="/dashboard" class="nav-link">Dashboard</a>
         </li>
+      </ul>
+
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <form class="d-flex mx-auto">
+          <input
+            class="form-control me-2"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+          />
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
         <li class="nav-item" *ngIf="!isAuthenticated()">
           <a routerLink="/login" class="nav-link">Login</a>
         </li>
@@ -57,10 +67,7 @@
           </button>
         </li>
         <li class="nav-item" *ngIf="!isAuthenticated()">
-          <a routerLink="/register" class="nav-link">Register</a>
-        </li>
-        <li class="nav-item" *ngIf="!isAuthenticated()">
-          <a routerLink="/contact" class="nav-link">Contact</a>
+          <a routerLink="/register" class="nav-link">Sign Up</a>
         </li>
       </ul>
     </div>
